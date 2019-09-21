@@ -1,23 +1,26 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import loginAndRegister from './components/login_and_register/loginAndRegister'
+import login from './components/login_and_register/login'
+import register from './components/login_and_register/register'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
+    { 
       path: '/',
-      name: 'home',
-      component: Home
+      redirect:'/loginAndRegister/login'
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      path: '/loginAndRegister',
+      name:'loginAndRegister',
+      component: loginAndRegister,
+      children:[
+        {path:'login',component:login},
+        {path:'register',component:register}
+      ]
     }
-  ]
+  ],
+  linkActiveClass: 'active'
 })
