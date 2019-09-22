@@ -11,5 +11,6 @@
     padding: 3px;
     overflow-y: hidden;
     overflow-x: hidden;
+    background-color: #EDEDED;
   }
 </style>
