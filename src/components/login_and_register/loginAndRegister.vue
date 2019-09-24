@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-        <h4 class="h">欢迎使用本系统</h4>
+        <h4 class="h item">欢迎使用本系统</h4>
         <!-- 按钮组 -->
-        <div class="btn-group btn-group-justified" role="group" >
+        <div class="btn-group btn-group-justified item" role="group" >
             <div class="btn-group" role="group">
                 <router-link type="button" class="btn btn-default" to="/loginAndRegister/login">登陆</router-link>
             </div>
@@ -11,8 +11,8 @@
             </div>
         </div>
         <!-- 表单 -->
-        <transition name="bounce" mode="out-in">
-            <router-view></router-view>
+        <transition  name="bounce" mode="out-in">
+            <router-view class="item"></router-view>
         </transition>
  
     </div>
@@ -26,16 +26,15 @@ export default {
 
 <style scoped>
     .container{
-        width: 50%;
+        width: 100%;
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
     }
-
-    .h{
-        margin-top: 15% ;
+    .item{
+        width: 50%;
     }
 
     .bounce-enter-active {
