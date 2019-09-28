@@ -56,9 +56,9 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><router-link to="/home/org">{{user.orgName}}</router-link></li>
-          <li><router-link to="/home/dep">{{user.depName}}</router-link></li>
-          <li><router-link to="/home/user">{{user.userName}}</router-link></li>
-          <li><router-link to="/home/message">  <span class="glyphicon glyphicon-envelope"></span><span> {{msgcount}}</span></router-link></li>
+          <li><router-link to="/home/dep/depinfo">{{user.depName}}</router-link></li>
+          <li><router-link to="/home/user/userinfo">{{user.userName}}</router-link></li>
+          <li><router-link to="/home/message/unreadmessages">  <span class="glyphicon glyphicon-envelope"></span><span> {{msgcount}}</span></router-link></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

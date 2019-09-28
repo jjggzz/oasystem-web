@@ -12,6 +12,11 @@ import chat from './components/home/main/chat/chat'
 import file from './components/home/main/file/file'
 import apply from './components/home/main/apply/apply'
 import notice from './components/home/main/notice/notice'
+import unreadmessages from './components/home/main/message/unreadmessages'
+import historymessages from './components/home/main/message/historymessages'
+import userinfo from './components/home/main/user/userinfo'
+import depinfo from './components/home/main/dep/depinfo'
+import depmember from './components/home/main/dep/depmember'
 
 Vue.use(Router)
 
@@ -34,9 +39,23 @@ export default new Router({
       path: '/home',
       component:home,
       children:[
-        {path:'message',component:message},
-        {path:'user',component:user},
-        {path:'dep',component:dep},
+        {path:'message',component:message,
+          children:[
+            {path:'unreadmessages',component:unreadmessages},
+            {path:'historymessages',component:historymessages}
+          ]
+        },
+        {path:'user',component:user,
+          children:[
+            {path:'userinfo',component:userinfo}
+          ]
+        },
+        {path:'dep',component:dep,
+          children:[
+            {path:'depinfo',component:depinfo},
+            {path:'depmember',component:depmember},
+          ]
+        },
         {path:'org',component:org},
         {path:'chat',component:chat},
         {path:'file',component:file},

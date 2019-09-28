@@ -27,7 +27,7 @@ export default {
     methods: {
         login(){
             alert(this.user.userLoginName+"......"+this.user.userPassword);
-            this.$router.push({path:'/home'})
+            this.$router.push({path:'/home/chat'})
         }
     },
 }

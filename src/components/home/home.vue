@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid box">
     <!-- 导航栏 -->
     <top :user='user' :msgcount='msgcount'></top>
     <transition name="main">
@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style>
-  .container{
+  .box{
     padding-top: 50px;
     overflow-x: hidden;
   }

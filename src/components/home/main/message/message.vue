@@ -1,5 +1,23 @@
 <template>
-  <h1>消息组件</h1>
+  <div class="message-container">
+    <div class="left">
+      <ul class="list-group">
+        <router-link to="/home/message/unreadmessages" tag="li" class="list-group-item">
+          <span class="badge">3</span>
+          未读消息
+        </router-link>
+        <router-link to="/home/message/historymessages" tag="li" class="list-group-item">
+            <span class="badge">2</span>
+            历史消息
+        </router-link>
+      </ul>
+    </div>
+    <div class="right">
+      <transition name="msg" mode="out-in">
+        <router-view></router-view>
+      </transition>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -8,6 +26,47 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  .message-container{
+    width: 100%;
+    height: calc(91vh);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-items: center;
+  }
+  .left{
+    flex:1.5;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-right: 5px;
+  }
+  .right{
+    flex:8.5;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-left: 5px;
+    overflow:auto;
+    overflow-x: hidden;
+    
+  }
+  .msg-enter-active {
+    animation: bounce-in .5s;
+    }
+    .msg-leave-active {
+    animation: bounce-in .5s reverse;
+    }
+    @keyframes bounce-in {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+    }
 </style>

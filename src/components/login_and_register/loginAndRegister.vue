@@ -35,6 +35,7 @@ export default {
     }
     .item{
         width: 50%;
+        text-align: center;
     }
 
     .bounce-enter-active {
