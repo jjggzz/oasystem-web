@@ -6,7 +6,6 @@
             部门信息
         </router-link>
         <router-link to="/home/dep/depmember" tag="li" class="list-group-item">
-          <span class="badge">14</span>
             成员列表
         </router-link>
       </ul>

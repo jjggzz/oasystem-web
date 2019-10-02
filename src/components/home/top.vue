@@ -55,7 +55,7 @@
           </li> -->
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><router-link to="/home/org">{{user.orgName}}</router-link></li>
+          <li><router-link to="/home/org/orginfo">{{user.orgName}}</router-link></li>
           <li><router-link to="/home/dep/depinfo">{{user.depName}}</router-link></li>
           <li><router-link to="/home/user/userinfo">{{user.userName}}</router-link></li>
           <li><router-link to="/home/message/unreadmessages">  <span class="glyphicon glyphicon-envelope"></span><span> {{msgcount}}</span></router-link></li>

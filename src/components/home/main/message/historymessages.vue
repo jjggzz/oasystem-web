@@ -10,7 +10,7 @@
 
 <script>
 
-import msglist from './subcom/msgList' 
+import msglist from '../../../subcom/msgList' 
 
 export default {
 data() {
