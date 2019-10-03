@@ -1,21 +1,21 @@
 <template>
   <div>
-    <div style="width:100%;">
+       <div style="width:100%;">
         <ol class="breadcrumb">
-            <li>部门</li>
-            <li>成员列表</li>
+            <li>组织</li>
+            <li>组织成员</li>
         </ol>
+        <memberlist></memberlist>
     </div>
-    <memberlist></memberlist>
   </div>
 </template>
 
 <script>
 import memberlist from '../../../subcom/memberlist'
 export default {
-  components:{
-    'memberlist':memberlist
-  }
+    components:{
+        'memberlist':memberlist
+    }
 }
 </script>
 

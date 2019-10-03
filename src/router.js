@@ -19,6 +19,7 @@ import depinfo from './components/home/main/dep/depinfo'
 import depmember from './components/home/main/dep/depmember'
 import orginfo from './components/home/main/org/orginfo'
 import deplist from './components/home/main/org/deplist'
+import orgmember from './components/home/main/org/orgmember'
 
 Vue.use(Router)
 
@@ -61,7 +62,8 @@ export default new Router({
         {path:'org',component:org,
           children:[
             {path:'orginfo',component:orginfo},
-            {path:'deplist',component:deplist}
+            {path:'deplist',component:deplist},
+            {path:'orgmember',component:orgmember}
           ]
         },
         {path:'chat',component:chat},

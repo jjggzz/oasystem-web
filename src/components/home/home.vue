@@ -3,7 +3,7 @@
     <!-- 导航栏 -->
     <top :user='user' :msgcount='msgcount'></top>
     <transition name="main">
-      <router-view ></router-view>
+      <router-view class="main"></router-view>
     </transition>
   </div>
 </template>
