@@ -44,7 +44,7 @@
               <li><a href="#">历史申请</a></li>
             </ul>
           </li> -->
-          <router-link to="/home/notice" tag="li"><a >通知管理 </a></router-link>
+          <router-link to="/home/notice/historynotice" tag="li"><a >通知管理 </a></router-link>
           <!-- <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">通知管理 <span class="caret"></span></a>
             <ul class="dropdown-menu">

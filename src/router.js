@@ -20,6 +20,8 @@ import depmember from './components/home/main/dep/depmember'
 import orginfo from './components/home/main/org/orginfo'
 import deplist from './components/home/main/org/deplist'
 import orgmember from './components/home/main/org/orgmember'
+import historynotice from './components/home/main/notice/historynotice'
+import sendnotice from './components/home/main/notice/sendnotice'
 
 Vue.use(Router)
 
@@ -69,7 +71,12 @@ export default new Router({
         {path:'chat',component:chat},
         {path:'file',component:file},
         {path:'apply',component:apply},
-        {path:'notice',component:notice}
+        {path:'notice',component:notice,
+          children:[
+            {path:'historynotice',component:historynotice},
+            {path:'sendnotice',component:sendnotice}
+          ]
+        }
       ]
     }
   ],
