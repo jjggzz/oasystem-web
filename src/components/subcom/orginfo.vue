@@ -1,5 +1,6 @@
 <template>
   <div class="org-info">
+    <h1 class="text-center">组织信息</h1>
         <form class="form-horizontal">
           <div class="form-group">
             <label for="orgName" class="col-sm-2 control-label">组织名</label>

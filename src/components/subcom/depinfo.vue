@@ -1,5 +1,6 @@
 <template>
   <div class="dep-info">
+        <h1 class="text-center">部门信息</h1>
         <form class="form-horizontal">
           <div class="form-group">
             <label for="depName" class="col-sm-2 control-label">部门名</label>
