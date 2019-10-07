@@ -5,6 +5,9 @@
         <router-link to="/home/user/userinfo" tag="li" class="list-group-item">
           用户信息
         </router-link>
+        <router-link to="/home/user/updatepassword" tag="li" class="list-group-item">
+          修改密码
+        </router-link>
       </ul>
     </div>
     <div class="main-container-right">

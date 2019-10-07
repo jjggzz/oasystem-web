@@ -22,6 +22,14 @@ import deplist from './components/home/main/org/deplist'
 import orgmember from './components/home/main/org/orgmember'
 import historynotice from './components/home/main/notice/historynotice'
 import sendnotice from './components/home/main/notice/sendnotice'
+import createapply from './components/home/main/apply/createapply'
+import historyapply from './components/home/main/apply/historyapply'
+import underwayapply from './components/home/main/apply/underwayapply'
+import updatepassword from './components/home/main/user/updatepassword'
+import createdep from './components/home/main/org/manage/createdep'
+import depmanage from './components/home/main/org/manage/depmanage'
+import membermanage from './components/home/main/org/manage/membermanage'
+import positionmanage from './components/home/main/org/manage/positionmanage'
 
 Vue.use(Router)
 
@@ -52,7 +60,8 @@ export default new Router({
         },
         {path:'user',component:user,
           children:[
-            {path:'userinfo',component:userinfo}
+            {path:'userinfo',component:userinfo},
+            {path:'updatepassword',component:updatepassword}
           ]
         },
         {path:'dep',component:dep,
@@ -65,12 +74,22 @@ export default new Router({
           children:[
             {path:'orginfo',component:orginfo},
             {path:'deplist',component:deplist},
-            {path:'orgmember',component:orgmember}
+            {path:'orgmember',component:orgmember},
+            {path:'createdep',component:createdep},
+            {path:'depmanage',component:depmanage},
+            {path:'membermanage',component:membermanage},
+            {path:'positionmanage',component:positionmanage}
           ]
         },
         {path:'chat',component:chat},
         {path:'file',component:file},
-        {path:'apply',component:apply},
+        {path:'apply',component:apply,
+          children:[
+            {path:'createapply',component:createapply},
+            {path:'historyapply',component:historyapply},
+            {path:'underwayapply',component:underwayapply}
+          ]
+        },
         {path:'notice',component:notice,
           children:[
             {path:'historynotice',component:historynotice},

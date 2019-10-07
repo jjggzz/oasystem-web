@@ -39,7 +39,8 @@
           </div>
           
           <div>
-              <span class="date">时间:2019-10-03 12:00:00</span>
+              <p class="date">时间:2019-10-03 12:00:00</p>
+              <button  class="btn btn-danger pull-right">删除</button>
           </div>
       </a>
     </div>

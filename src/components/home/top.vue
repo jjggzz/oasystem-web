@@ -33,7 +33,7 @@
               <li><a href="#">文件管理</a></li>
             </ul>
           </li> -->
-          <router-link to="/home/apply" tag="li"><a >审批申请 </a></router-link>
+          <router-link to="/home/apply/createapply" tag="li"><a >审批申请 </a></router-link>
           <!-- <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">审批申请 <span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -55,8 +55,8 @@
           </li> -->
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><router-link to="/home/org/orginfo">{{user.orgName}}</router-link></li>
-          <li><router-link to="/home/dep/depinfo">{{user.depName}}</router-link></li>
+          <li><router-link to="/home/org/orginfo">组织</router-link></li>
+          <li><router-link to="/home/dep/depinfo">部门</router-link></li>
           <li><router-link to="/home/user/userinfo">{{user.userName}}</router-link></li>
           <li><router-link to="/home/message/unreadmessages">  <span class="glyphicon glyphicon-envelope"></span><span> {{msgcount}}</span></router-link></li>
         </ul>

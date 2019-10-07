@@ -6,6 +6,17 @@
               <li>发送通知</li>
           </ol>
       </div>
+      <ol>
+        <li>编辑通知标题,通知描述</li>
+        <li>填写通知内容(当内容过长或者需要发送附件时请上传文件,文件<strong>最大为5MB</strong>)</li>
+        <li>
+          选择通知的级别
+          <ul>
+            <li>所有部门:向本组织的所有部门发送通知,<strong>所有人可见</strong></li>
+            <li>当前部门:向自己所在部门发送通知,<strong>仅自己部门人员可见</strong></li>
+          </ul>
+        </li>
+      </ol>
 
       <div class="sendNotice">
           <h1 class="text-center">发送通知</h1>
@@ -46,7 +57,7 @@
 
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <button class="btn btn-default" @click="save">发送</button>
+              <button class="btn btn-success" @click="save">发送</button>
             </div>
           </div>
         </form>

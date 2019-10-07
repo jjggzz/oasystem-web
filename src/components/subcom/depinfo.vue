@@ -42,7 +42,7 @@
 
           <div v-if="isleader" class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <button class="btn btn-default" @click="save">保存</button>
+              <button class="btn btn-success" @click="save">保存</button>
             </div>
           </div>
         </form>
