@@ -24,7 +24,7 @@
               <li><a href="#">组织聊天</a></li>
             </ul>
           </li> -->
-          <router-link to="/home/file" tag="li"><a >组织文件 </a></router-link>
+          <router-link to="/home/file/filelist" tag="li"><a >组织文件 </a></router-link>
           <!-- <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">组织文件 <span class="caret"></span></a>
             <ul class="dropdown-menu">

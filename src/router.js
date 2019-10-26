@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import loginAndRegister from './components/login_and_register/loginAndRegister'
 import login from './components/login_and_register/login'
 import register from './components/login_and_register/register'
 import home from './components/home/home'
@@ -30,6 +29,9 @@ import createdep from './components/home/main/org/manage/createdep'
 import depmanage from './components/home/main/org/manage/depmanage'
 import membermanage from './components/home/main/org/manage/membermanage'
 import positionmanage from './components/home/main/org/manage/positionmanage'
+import waitexamine from './components/home/main/apply/manage/waitexamine'
+import historyexamine from './components/home/main/apply/manage/historyexamine'
+import filelist from './components/home/main/file/filelist'
 
 Vue.use(Router)
 
@@ -37,16 +39,16 @@ export default new Router({
   routes: [
     { 
       path: '/',
-      redirect:'/loginAndRegister/login'
+      redirect:'/login'
     },
     {
-      path: '/loginAndRegister',
-      name:'loginAndRegister',
-      component: loginAndRegister,
-      children:[
-        {path:'login',component:login},
-        {path:'register',component:register}
-      ]
+      path:'/login',
+      name:'login',
+      component:login
+    },{
+      path:'/register',
+      name:'register',
+      component:register
     },
     {
       path: '/home',
@@ -82,12 +84,18 @@ export default new Router({
           ]
         },
         {path:'chat',component:chat},
-        {path:'file',component:file},
+        {path:'file',component:file,
+          children:[
+            {path:'filelist',component:filelist}
+          ]
+        },
         {path:'apply',component:apply,
           children:[
             {path:'createapply',component:createapply},
             {path:'historyapply',component:historyapply},
-            {path:'underwayapply',component:underwayapply}
+            {path:'underwayapply',component:underwayapply},
+            {path:'waitexamine',component:waitexamine},
+            {path:'historyexamine',component:historyexamine}
           ]
         },
         {path:'notice',component:notice,

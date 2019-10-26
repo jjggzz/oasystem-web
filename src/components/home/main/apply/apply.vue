@@ -11,6 +11,13 @@
         <router-link to="/home/apply/historyapply" tag="li" class="list-group-item">
             历史申请
         </router-link>
+        <li role="separator" class="divider"></li>
+        <router-link to="/home/apply/waitexamine" tag="li" class="list-group-item">
+            正待审批
+        </router-link>
+        <router-link to="/home/apply/historyexamine" tag="li" class="list-group-item">
+            历史审批
+        </router-link>
       </ul>
     </div>
     <div class="main-container-right">
