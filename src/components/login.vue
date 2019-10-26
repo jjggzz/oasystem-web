@@ -57,7 +57,7 @@ export default {
             this.$refs[formName].validate((valid)=>{
                 if(valid){
 
-                    this.$router.push({path:'/home/chat'})
+                    this.$router.push({path:'/home'})
                 }
                 else{
                     //校验未通过,不提交表单

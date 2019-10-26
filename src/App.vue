@@ -12,7 +12,7 @@
     height: calc(100vh);/**浏览器可用100%高度 */
     padding: 3px;
     overflow-x: hidden;
-    background-color: #EDEDED;
+    /* background-color: #EDEDED; */
   }
 
     .bounce-enter-active {
