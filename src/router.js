@@ -4,6 +4,11 @@ import login from './components/login'
 import register from './components/register'
 import home from './components/home'
 
+import depChat from './components/fun/chat/depChat'
+import orgChat from './components/fun/chat/orgChat'
+import fileList from './components/fun/file/fileList'
+import sendNotice from './components/fun/notice/sendNotice'
+
 Vue.use(Router)
 
 export default new Router({
@@ -21,7 +26,13 @@ export default new Router({
     },
     {
       path: '/home',
-      component:home
+      component:home,
+      children:[
+        {path:'depChat',component:depChat},
+        {path:'orgChat',component:orgChat},
+        {path:'fileList',component:fileList},
+        {path:'sendNotice',component:sendNotice}
+      ]
     }
   ]
 })

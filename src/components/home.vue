@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container >
     <!-- 头部导航栏 -->
     <el-header>
         <el-menu
@@ -31,8 +31,9 @@
             class="filter-tree"
             :data="data2"
             :props="defaultProps"
-            default-expand-all
+            :highlight-current="true"
             :filter-node-method="filterNode"
+            @node-click="show"
             ref="tree2">
           </el-tree>
       </el-aside>
@@ -40,6 +41,7 @@
       <el-main>
         <router-view></router-view>
       </el-main>
+
     </el-container>
   </el-container>
 </template>
@@ -57,19 +59,19 @@ export default {
           children: [{
             id: 5,
             label: '部门聊天',
+            path:'/home/depChat'
           },{
             id: 6,
             label: '组织聊天',
+            path:'/home/orgChat'
           }]
         }, {
           id: 2,
           label: '组织文件',
           children: [{
             id: 7,
-            label: '文件列表'
-          }, {
-            id: 8,
-            label: '文件管理'
+            label: '文件列表',
+            path:'/home/fileList'
           }]
         }, {
           id: 3,
@@ -98,7 +100,8 @@ export default {
             label: '历史通知'
           }, {
             id: 13,
-            label: '发送通知'
+            label: '发送通知',
+            path:'/home/sendNotice'
           }]
         },{
           id: 4,
@@ -124,7 +127,11 @@ export default {
           }, {
             id: 13,
             label: '人员管理'
-          }]
+          }, {
+            id: 8,
+            label: '文件管理'
+          }
+          ]
         },{
           id: 4,
           label: '消息管理',
@@ -139,7 +146,8 @@ export default {
         defaultProps: {
           children: 'children',
           label: 'label'
-        }
+        }, 
+        currentRouter:'/home'
     }
   },
   methods: {
@@ -149,6 +157,19 @@ export default {
     filterNode(value, data) {
       if (!value) return true;
       return data.label.indexOf(value) !== -1;
+    },
+    show(obj,node,he){
+      //路由到对应的页面
+      var add = obj.path
+      if(add != undefined){
+        
+        if(this.currentRouter != add){
+          this.currentRouter = add
+          this.$router.push({path:add})
+        }
+
+      }
+
     }
   },
   watch: {
@@ -160,7 +181,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 
 </style>
