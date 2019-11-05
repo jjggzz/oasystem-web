@@ -8,6 +8,7 @@ import depChat from './components/fun/chat/depChat'
 import orgChat from './components/fun/chat/orgChat'
 import fileList from './components/fun/file/fileList'
 import sendNotice from './components/fun/notice/sendNotice'
+import historyNotice from './components/fun/notice/historyNotice'
 
 Vue.use(Router)
 
@@ -31,7 +32,8 @@ export default new Router({
         {path:'depChat',component:depChat},
         {path:'orgChat',component:orgChat},
         {path:'fileList',component:fileList},
-        {path:'sendNotice',component:sendNotice}
+        {path:'sendNotice',component:sendNotice},
+        {path:'historyNotice',component:historyNotice}
       ]
     }
   ]

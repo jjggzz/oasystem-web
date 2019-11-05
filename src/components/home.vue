@@ -85,56 +85,31 @@ export default {
           }, {
             id: 11,
             label: '历史申请'
-          }, {
-            id: 10,
-            label: '正待审批'
-          }, {
-            id: 11,
-            label: '历史审批'
           }]
         },{
           id: 4,
           label: '通知管理',
           children: [{
             id: 12,
-            label: '历史通知'
-          }, {
-            id: 13,
-            label: '发送通知',
-            path:'/home/sendNotice'
+            label: '历史通知',
+            path:'/home/historyNotice'
           }]
         },{
-          id: 4,
-          label: '组织管理',
-          children: [{
-            id: 12,
-            label: '组织信息'
-          }, {
-            id: 13,
-            label: '部门列表'
-          }, {
-            id: 13,
-            label: '组织成员'
-          }, {
-            id: 13,
-            label: '创建部门'
-          }, {
-            id: 13,
-            label: '管理部门'
-          }, {
-            id: 13,
-            label: '职位管理'
-          }, {
-            id: 13,
-            label: '人员管理'
-          }, {
-            id: 8,
-            label: '文件管理'
-          }
+          id:4,
+          label:'组织结构',
+          children:[
+            {
+              id:12,
+              label:'部门列表'
+            },
+            {
+              id:12,
+              label:'组织成员'
+            }
           ]
         },{
           id: 4,
-          label: '消息管理',
+          label: '个人消息',
           children: [{
             id: 12,
             label: '未读消息'
@@ -142,6 +117,48 @@ export default {
             id: 13,
             label: '历史消息'
           }]
+        },{
+          id: 4,
+          label: '组织管理',
+          children: [{
+            id: 12,
+            label: '申请管理',
+            children:[
+              {
+                id:15,
+                label:'正待审批'
+              },{
+                id:15,
+                label:'历史审批'
+              }
+            ]
+          }, {
+            id: 13,
+            label: '通知管理',
+            children:[
+              {
+                id: 13,
+                label: '发送通知',
+                path:'/home/sendNotice'
+              }
+            ]
+          }, {
+            id: 13,
+            label: '结构管理',
+            children:[
+               {
+                id: 13,
+                label: '部门信息'
+              }, {
+                id: 13,
+                label: '职位管理'
+              }, {
+                id: 13,
+                label: '人员管理'
+              }
+            ]
+          }
+          ]
         }],
         defaultProps: {
           children: 'children',

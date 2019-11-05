@@ -17,10 +17,12 @@
                     <el-upload
                     class="upload-demo"
                     ref="upload"
-                    action=""
+                    action="https://jsonplaceholder.typicode.com/posts/"
                     :data="updata"
                     :on-preview="handlePreview"
                     :on-remove="handleRemove"
+                    :on-success="handleSuccess"
+                    :on-error="handleError"
                     :file-list="fileList"
                     :auto-upload="false">
                     <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
@@ -36,7 +38,12 @@
                 </el-form>
             </el-col>
             <el-col :span="8">
-                
+                <ol>
+                    <li>输入通知标题</li>
+                    <li>选择通知级别</li>
+                    <li>输入通知内容</li>
+                    <li>当内容过多或有文件时请上传文件</li>
+                </ol>
             </el-col>
         </el-row>
       </el-main>
@@ -92,6 +99,19 @@ export default {
       },
       handlePreview(file) {
         console.log(file);
+      },
+      handleSuccess(response,file,fileList){
+        this.$notify({
+          title: '成功',
+          message: '发送成功',
+          type: 'success'
+        });
+      },
+      handleError(err, file, fileList){
+          this.$notify.error({
+          title: '错误',
+          message: '这是一条错误的提示消息'
+        });
       }
     },
 }
