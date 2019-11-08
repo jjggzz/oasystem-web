@@ -17,7 +17,6 @@
             <el-menu-item index="2-2">选项2</el-menu-item>
             <el-menu-item index="2-3">选项3</el-menu-item>
           </el-submenu>
-          <el-menu-item index="3">我的消息</el-menu-item>
         </el-menu>
     </el-header>
     <el-container>
@@ -100,11 +99,13 @@ export default {
           children:[
             {
               id:12,
-              label:'部门列表'
+              label:'部门列表',
+            path:'/home/depList'
             },
             {
               id:12,
-              label:'组织成员'
+              label:'组织成员',
+            path:'/home/employList'
             }
           ]
         },{
@@ -112,10 +113,12 @@ export default {
           label: '个人消息',
           children: [{
             id: 12,
-            label: '未读消息'
+            label: '未读消息',
+            path:'/home/newMessage'
           }, {
             id: 13,
-            label: '历史消息'
+            label: '历史消息',
+            path:'/home/historyMessage'
           }]
         },{
           id: 4,
@@ -146,9 +149,13 @@ export default {
             id: 13,
             label: '结构管理',
             children:[
+              {
+                id: 13,
+                label: '组织概述'
+              },
                {
                 id: 13,
-                label: '部门信息'
+                label: '部门管理'
               }, {
                 id: 13,
                 label: '职位管理'

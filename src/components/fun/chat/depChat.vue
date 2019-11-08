@@ -1,16 +1,23 @@
 <template>
   <el-container>
       <el-main>
-          <div class="container">
-            <el-breadcrumb separator="/">
-                <el-breadcrumb-item>首页</el-breadcrumb-item>
-                <el-breadcrumb-item>组织交流</el-breadcrumb-item>
-                <el-breadcrumb-item>部门交流</el-breadcrumb-item>
-            </el-breadcrumb>
-            <div class="chat-container">
-                
-            </div>
-          </div>
+          <el-row :gutter="20">
+              <el-col :span="16">
+                  <div class="container">
+                    <el-breadcrumb separator="/">
+                        <el-breadcrumb-item>首页</el-breadcrumb-item>
+                        <el-breadcrumb-item>组织交流</el-breadcrumb-item>
+                        <el-breadcrumb-item>部门交流</el-breadcrumb-item>
+                    </el-breadcrumb>
+                    <div class="chat-container">
+                        
+                    </div>
+                </div>
+              </el-col>
+              <el-col :span="8"></el-col>
+          </el-row>
+
+          
       </el-main>
     <el-footer>
         <el-row :gutter="20">
@@ -29,15 +36,17 @@
                 </el-popover>
                 <el-button type="info" v-popover:popover4>查看在线人员</el-button>
             </el-col>
-            <el-col :span="16">
+            <el-col :span="8">
                 <el-input
                 placeholder="请输入内容"
                 v-model="text"
                 clearable>
                 </el-input>
             </el-col>
-            <el-col :span="4">
+            <el-col class="btn-center" :span="4">
                 <el-button type="success" @click="sendMessage" round>发送</el-button>
+            </el-col>
+            <el-col :span="8">
             </el-col>
         </el-row>
     </el-footer>
@@ -68,7 +77,7 @@ export default {
     .container{
         overflow:hidden;
         width: 100%;
-        height: calc(69vh);
+        height: calc(67vh);
     }
     .chat-container{
         margin-top: 5px;
@@ -77,5 +86,10 @@ export default {
         overflow-x:hidden;
         overflow-y:scroll;
         background-color: #EDEDED;
+    }
+    .btn-center{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
     }
 </style>

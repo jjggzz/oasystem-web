@@ -69,6 +69,7 @@
                 @click="handleDelete(scope.$index, scope.row)">删除</el-button>
             </template>
             </el-table-column>
+            <el-table-column label="文件数量: 5"></el-table-column>
         </el-table>
         </el-main>
     </el-container>

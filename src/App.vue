@@ -9,7 +9,6 @@
 <style scoped>
   #app{
     width: 100%;
-    padding: 3px;
     overflow-x: hidden;
     /* background-color: #EDEDED; */
   }

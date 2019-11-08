@@ -1,8 +1,22 @@
 <template>
   <el-container>
       <el-main>
+        <el-form :inline="true"  class="demo-form-inline">
+            <el-form-item label="日期">
+            <el-date-picker
+                v-model="date"
+                type="daterange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期">
+            </el-date-picker>
+            </el-form-item>
+            <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+            </el-form-item>
+        </el-form>
         <el-row :gutter="20">
-            <el-col :span="16" class="a" >
+            <el-col :span="16"  >
                 <div class="item">
                     <div class="notice">
                         <div class="title">
@@ -86,6 +100,7 @@
 export default {
     data() {
         return {
+            date:'',
             currentPage:1
         }
     },
@@ -95,6 +110,9 @@ export default {
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
+      },
+      onSubmit() {
+        console.log('submit!');
       }
     },
 }
@@ -110,8 +128,8 @@ export default {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        padding: 5px;
-        margin: 10px;
+        padding: 2px;
+        margin: 5px;
     }
     .btn{
         display: flex;
