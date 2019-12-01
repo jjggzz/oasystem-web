@@ -19,29 +19,12 @@
           </el-submenu>
         </el-menu>
     </el-header>
-    <el-container>
-      <!-- 左侧菜单 -->
-      <el-aside width="200px">
-          <el-input
-            placeholder="输入关键字进行过滤"
-            v-model="filterText">
-          </el-input>
-          <el-tree
-            class="filter-tree"
-            :data="data2"
-            :props="defaultProps"
-            :highlight-current="true"
-            :filter-node-method="filterNode"
-            @node-click="show"
-            ref="tree2">
-          </el-tree>
-      </el-aside>
-      <!-- 右侧主要显示区域 -->
-      <el-main>
-        <router-view></router-view>
-      </el-main>
-
-    </el-container>
+    <el-main>
+      <!-- 页面主体 -->
+    </el-main>
+    <el-footer>
+      <!-- 页脚部分 -->
+    </el-footer>
   </el-container>
 </template>
 
