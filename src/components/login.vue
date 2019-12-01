@@ -79,6 +79,7 @@ export default {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     box-shadow: 0 0 25px #909399;
+    background-color: #fff;
   }
 
   .login-title {

@@ -4,7 +4,6 @@ import login from './components/login'
 import adminHome from './components/adminHome'
 import userHome from './components/userHome'
 
-
 Vue.use(Router)
 
 export default new Router({
