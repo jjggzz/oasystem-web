@@ -12,7 +12,7 @@
         active-text-color="#ffd04b"
         >
         <el-menu-item index="1">管理员专属</el-menu-item>
-        <el-menu-item index="2">用户管理</el-menu-item>
+        <el-menu-item index="/adminHome/userManage" route="true">用户管理</el-menu-item>
         <el-menu-item index="3">部门管理</el-menu-item>
         <el-submenu index="4">
           <template slot="title">结构管理</template>
@@ -47,6 +47,7 @@ export default {
   methods: {
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
+        this.$router.push({path:key})
       },
   }
 

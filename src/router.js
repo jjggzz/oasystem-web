@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import login from './components/login'
 import adminHome from './components/adminHome'
 import userHome from './components/userHome'
+import userManage from './components/adminpage/userManage'
 
 Vue.use(Router)
 
@@ -12,13 +13,19 @@ export default new Router({
       path: '/',
       redirect:'/login'
     },
-    {
+    {   
       path:'/login',
       component:login
     },
     {
       path: '/adminHome',
-      component:adminHome
+      component:adminHome,
+      children:[
+        {
+          path:'userManage',
+          component:userManage
+        }
+      ]
     },
     {
       path: '/userHome',
