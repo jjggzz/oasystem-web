@@ -22,16 +22,20 @@
             <el-menu-item index="2-4-2">职位分配</el-menu-item>
           </el-submenu>
           <el-menu-item index="4-2">职务管理</el-menu-item>
+          <el-menu-item index="4-3">流程管理</el-menu-item>
       </el-submenu>
         <el-menu-item index="5">权限管理</el-menu-item>
+        <el-menu-item index="6">论坛管理</el-menu-item>
       </el-menu>
     </el-header>
     <el-main>
       <!-- 页面主体 -->
       <router-view></router-view>
+
     </el-main>
-    <el-footer>
+    <el-footer >
       <!-- 页脚 -->
+      <p class="footer">作者邮箱:1945282561@qq.com 后端框架:springboot(ssm) ui框架:elementUI js框架:vue</p>
     </el-footer>
 </el-container>
 </template>
@@ -55,6 +59,8 @@ export default {
 </script>
 
 <style scoped>
-
+  .footer{
+    text-align: center;
+  }
 
 </style>

@@ -16,11 +16,15 @@
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">查询</el-button>
             </el-form-item>
+            <el-form-item class="right">
+                <el-button type="success" @click="createUser" >生成用户</el-button>
+            </el-form-item>
         </el-form>
           <!-- 表格区域 -->
         <el-table
         :data="userData"
         style="width: 100%"
+        :max-height="tableHeight"
         :default-sort = "{prop: 'createDate', order: 'descending'}">
         <el-table-column
         prop="id"
@@ -77,13 +81,26 @@
             <el-button type="info" size="small">重置密码</el-button>
         </el-table-column>
     </el-table>
+<el-dialog
+  title="提示"
+  :visible.sync="dialogVisible"
+  width="30%"
+  :before-close="handleClose">
+  <span>这是一段信息</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+</el-dialog>
     </el-container>
 </template>
 
 <script>
   export default {
     data() {
+      
       return {
+        tableHeight:document.documentElement.clientHeight-250,
         formInline: {
           createDate: '',
           name: ''
@@ -149,8 +166,79 @@
                 phone:'18376301879',
                 email:'123@123.com',
                 status:0
+            },{
+                id:'1',
+                createDate:'2016-11-01',
+                loginName:'123456',
+                password:'123456',
+                name:'刘八',
+                dep:'管理学院',
+                phone:'18376301879',
+                email:'123@123.com',
+                status:0
+            },{
+                id:'1',
+                createDate:'2016-11-01',
+                loginName:'123456',
+                password:'123456',
+                name:'刘八',
+                dep:'管理学院',
+                phone:'18376301879',
+                email:'123@123.com',
+                status:0
+            },{
+                id:'1',
+                createDate:'2016-11-01',
+                loginName:'123456',
+                password:'123456',
+                name:'刘八',
+                dep:'管理学院',
+                phone:'18376301879',
+                email:'123@123.com',
+                status:0
+            },{
+                id:'1',
+                createDate:'2016-11-01',
+                loginName:'123456',
+                password:'123456',
+                name:'刘八',
+                dep:'管理学院',
+                phone:'18376301879',
+                email:'123@123.com',
+                status:0
+            },{
+                id:'1',
+                createDate:'2016-11-01',
+                loginName:'123456',
+                password:'123456',
+                name:'刘八',
+                dep:'管理学院',
+                phone:'18376301879',
+                email:'123@123.com',
+                status:0
+            },{
+                id:'1',
+                createDate:'2016-11-01',
+                loginName:'123456',
+                password:'123456',
+                name:'刘八',
+                dep:'管理学院',
+                phone:'18376301879',
+                email:'123@123.com',
+                status:0
+            },{
+                id:'1',
+                createDate:'2016-11-01',
+                loginName:'123456',
+                password:'123456',
+                name:'刘八',
+                dep:'管理学院',
+                phone:'18376301879',
+                email:'123@123.com',
+                status:0
             },
-        ]
+        ],
+        dialogVisible:false
       }
     },
     methods: {
@@ -160,11 +248,24 @@
       onSubmit() {
         console.log('submit!');
         console.log(this.formInline.createDate[0].getTime());
+      },
+      createUser(){
+          this.dialogVisible = true
+      },
+      handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
       }
     },
   }
 </script>
 
-<style>
-
+<style scoped>
+  .right{
+    position: absolute;
+    right: 20px;
+  }
 </style>

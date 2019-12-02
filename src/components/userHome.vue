@@ -29,11 +29,16 @@
           </el-submenu>
           <el-menu-item index="4">文件列表</el-menu-item>
            <el-menu-item index="5">成员名册</el-menu-item>
-          <el-submenu index="6" >
+           <el-submenu index="6" >
+            <template slot="title">组织论坛</template>
+            <el-menu-item index="6-1">技术求助</el-menu-item>
+            <el-menu-item index="6-2">灌水专区</el-menu-item>
+          </el-submenu>
+          <el-submenu index="7" >
             <template slot="title">个人中心</template>
-            <el-menu-item index="6-1" @click="dialog = true">个人信息</el-menu-item>
-            <el-menu-item index="6-2">未读消息</el-menu-item>
-            <el-menu-item index="6-3">修改密码</el-menu-item>
+            <el-menu-item index="7-1" @click="dialog = true">个人信息</el-menu-item>
+            <el-menu-item index="7-2">未读消息</el-menu-item>
+            <el-menu-item index="7-3">修改密码</el-menu-item>
           </el-submenu>
           <el-menu-item  class="right">
             <i class="el-icon-switch-button"></i>
@@ -83,7 +88,7 @@
     </el-main>
     <el-footer>
       <!-- 页脚部分 -->
-      
+      <p class="footer">作者邮箱:1945282561@qq.com 后端框架:springboot(ssm) ui框架:elementUI js框架:vue</p>
     </el-footer>
   </el-container>
 </template>
@@ -153,6 +158,9 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content:space-around
+  }
+  .footer{
+    text-align: center;
   }
 
 </style>
