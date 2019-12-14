@@ -1,20 +1,15 @@
 <template>
     <el-container direction="vertical">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+      <el-main style="padding:0px">
+        <el-form :inline="true" class="demo-form-inline">
             <el-form-item label="创建日期">
                 <el-date-picker
-                    v-model="formInline.createDate"
+                    v-model="createDate"
                     type="daterange"
                     range-separator="至"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期">
                 </el-date-picker>
-            </el-form-item>
-            <el-form-item label="用户名">
-                <el-input v-model="formInline.name" placeholder="请输入用户名"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="onSubmit">查询</el-button>
             </el-form-item>
             <el-form-item class="right">
                 <el-button type="success" @click="createUser" >生成用户</el-button>
@@ -22,244 +17,352 @@
         </el-form>
           <!-- 表格区域 -->
         <el-table
-        :data="userData"
+        :data="showUserList"
         style="width: 100%"
-        :max-height="tableHeight"
-        :default-sort = "{prop: 'createDate', order: 'descending'}">
+        :default-sort = "{prop: 'userCreateTime', order: 'descending'}"
+        height="540">
         <el-table-column
-        prop="id"
-        label="用户id">
+        type="index"
+        label="序号">
         </el-table-column>
         <el-table-column
-        prop="createDate"
+        prop="userCreateTime"
         sortable
         label="创建时间">
+        <template slot-scope="scope">
+          {{scope.row.userCreateTime | dateFormart}}
+        </template>
         </el-table-column>
         <el-table-column
-        prop="loginName"
+        prop="userAccount"
         label="登录名">
         </el-table-column>
         <el-table-column
-        prop="password"
-        label="密码">
-        </el-table-column>
-        <el-table-column
-        prop="name"
+        prop="userName"
         label="用户名">
         </el-table-column>
         <el-table-column
-        prop="dep"
+        prop="department.departmentName"
         label="所属部门">
         </el-table-column>
         <el-table-column
-        prop="phone"
+        prop="userPhone"
         label="电话">
         </el-table-column>
         <el-table-column
-        prop="email"
+        prop="userEmail"
         label="邮箱">
         </el-table-column>
         <el-table-column
-        prop="status"
+        prop="userStatus"
         label="状态"
-        :filters="[{ text: '使用中', value: 0 }, { text: '已锁定', value: 1 }]"
+        :filters="[{ text: '使用中', value: false }, { text: '已锁定', value: true }]"
         :filter-method="filterStatus"
         filter-placement="bottom-end">
         <template slot-scope="scope">
             <el-tag
-            :type="scope.row.status == 0 ? 'success' : 'warning'"
-            disable-transitions>{{scope.row.status == 0 ? '使用中':'已锁定'}}</el-tag>
+            :type="scope.row.userStatus == false ? 'success' : 'warning'"
+            disable-transitions>{{scope.row.userStatus == false ? '使用中':'已锁定'}}</el-tag>
         </template>
         </el-table-column>
         <el-table-column
-        fixed="right"
-        label="操作"
+        align="right"
         width="300">
-            <el-button  type="warning" size="small">锁定</el-button>
-            <el-button type="success" size="small">解锁</el-button>
-            <el-button type="danger" size="small">注销</el-button>
-            <el-button type="info" size="small">重置密码</el-button>
-        </el-table-column>
+        <template slot="header" slot-scope="scope">
+          <el-input
+            v-model="search"
+            size="mini"
+            placeholder="输入关键字搜索"/>
+        </template>
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="success"
+            plain
+            @click="handleEdit(scope.$index, scope.row)">解锁</el-button>
+          <el-button
+            size="mini"
+            type="warning"
+            plain
+            @click="handleDelete(scope.$index, scope.row)">锁定</el-button>
+            <el-button
+            size="mini"
+            type="primary"
+            plain
+            @click="handleDelete(scope.$index, scope.row)">详情</el-button>
+            <el-button
+            size="mini"
+            type="danger"
+            plain
+            @click="handleDelete(scope.$index, scope.row)">注销</el-button>
+        </template>
+      </el-table-column>
     </el-table>
-<el-dialog
-  title="提示"
-  :visible.sync="dialogVisible"
-  width="30%"
-  :before-close="handleClose">
-  <span>这是一段信息</span>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-  </span>
-</el-dialog>
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="50%">
+      
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
+    </el-main>
     </el-container>
 </template>
 
 <script>
   export default {
+    computed:{
+      showUserList:function(){
+        return this.userData.filter((item)=>{
+          if(this.createDate != null){
+            if((item.userCreateTime >= this.createDate[0].getTime() && item.userCreateTime <= this.createDate[1].getTime() )&&(item.userAccount.includes(this.search)||item.userName.includes(this.search)||
+            item.userPhone.includes(this.search)||item.userEmail.includes(this.search))){
+              return item;
+            }
+          }
+          else{
+            //如果过滤时间为空则不进行比较
+            if(item.userAccount.includes(this.search)||item.userName.includes(this.search)||
+            item.userPhone.includes(this.search)||item.userEmail.includes(this.search)){
+              return item;
+            }
+          }
+          
+        })
+      }
+    },
     data() {
-      
       return {
-        tableHeight:document.documentElement.clientHeight-250,
-        formInline: {
-          createDate: '',
-          name: ''
-        },
+        createDate:null,
+        search: '',
         userData: [
             {
-                id:'1',
-                createDate:'2016-11-05',
-                loginName:'123456',
-                password:'123456',
-                name:'张三',
-                dep:'信息工程学院',
-                phone:'18376301879',
-                email:'123@123.com',
-                status:0
+                userId:'1',
+                userCreateTime:1572883200000,
+                userAccount:'123456',
+                userName:'张三',
+                userPhone:'18376301879',
+                userEmail:'123@123.com',
+                userStatus:false,
+                department:{
+                  departmentId:'1',
+                  departmentName:'土建学院',
+                  departmentNumber:'1',
+                  departmentLevel:'1',
+                },
+                Position:{
+                  positionId:'1',
+                  positionName:'院长',
+                }
+            },
+            {
+                userId:'2',
+                userCreateTime:1575561600000,
+                userAccount:'123456',
+                userName:'李四',
+                userPhone:'13737315945',
+                userEmail:'123@123.com',
+                userStatus:true,
+                department:{
+                  departmentId:'1',
+                  departmentName:'信工学院',
+                  departmentNumber:'1',
+                  departmentLevel:'1',
+                },
+                Position:{
+                  positionId:'1',
+                  positionName:'书记',
+                }
             },{
-                id:'2',
-                createDate:'2016-11-02',
-                loginName:'abcdef',
-                password:'123456',
-                name:'李四',
-                dep:'土建学院',
-                phone:'18376301879',
-                email:'123@123.com',
-                status:1
+                userId:'2',
+                userCreateTime:1575561600000,
+                userAccount:'123456',
+                userName:'李四',
+                userPhone:'13737315945',
+                userEmail:'123@123.com',
+                userStatus:true,
+                department:{
+                  departmentId:'1',
+                  departmentName:'信工学院',
+                  departmentNumber:'1',
+                  departmentLevel:'1',
+                },
+                Position:{
+                  positionId:'1',
+                  positionName:'书记',
+                }
             },{
-                id:'3',
-                createDate:'2016-11-23',
-                loginName:'123456',
-                password:'123456',
-                name:'王五',
-                dep:'高博软件学院',
-                phone:'18376301879',
-                email:'123@123.com',
-                status:0
+                userId:'2',
+                userCreateTime:1575561600000,
+                userAccount:'123456',
+                userName:'李四',
+                userPhone:'13737315945',
+                userEmail:'123@123.com',
+                userStatus:true,
+                department:{
+                  departmentId:'1',
+                  departmentName:'信工学院',
+                  departmentNumber:'1',
+                  departmentLevel:'1',
+                },
+                Position:{
+                  positionId:'1',
+                  positionName:'书记',
+                }
             },{
-                id:'4',
-                createDate:'2016-11-14',
-                loginName:'123456',
-                password:'123456',
-                name:'赵六',
-                dep:'机质学院',
-                phone:'18376301879',
-                email:'123@123.com',
-                status:0
+                userId:'2',
+                userCreateTime:1575561600000,
+                userAccount:'123456',
+                userName:'李四',
+                userPhone:'13737315945',
+                userEmail:'123@123.com',
+                userStatus:true,
+                department:{
+                  departmentId:'1',
+                  departmentName:'信工学院',
+                  departmentNumber:'1',
+                  departmentLevel:'1',
+                },
+                Position:{
+                  positionId:'1',
+                  positionName:'书记',
+                }
             },{
-                id:'1',
-                createDate:'2016-11-08',
-                loginName:'123456',
-                password:'123456',
-                name:'田七',
-                dep:'艺术学院',
-                phone:'18376301879',
-                email:'123@123.com',
-                status:1
+                userId:'2',
+                userCreateTime:1575561600000,
+                userAccount:'123456',
+                userName:'李四',
+                userPhone:'13737315945',
+                userEmail:'123@123.com',
+                userStatus:true,
+                department:{
+                  departmentId:'1',
+                  departmentName:'信工学院',
+                  departmentNumber:'1',
+                  departmentLevel:'1',
+                },
+                Position:{
+                  positionId:'1',
+                  positionName:'书记',
+                }
             },{
-                id:'1',
-                createDate:'2016-11-01',
-                loginName:'123456',
-                password:'123456',
-                name:'刘八',
-                dep:'管理学院',
-                phone:'18376301879',
-                email:'123@123.com',
-                status:0
+                userId:'2',
+                userCreateTime:1575561600000,
+                userAccount:'123456',
+                userName:'李四',
+                userPhone:'13737315945',
+                userEmail:'123@123.com',
+                userStatus:true,
+                department:{
+                  departmentId:'1',
+                  departmentName:'信工学院',
+                  departmentNumber:'1',
+                  departmentLevel:'1',
+                },
+                Position:{
+                  positionId:'1',
+                  positionName:'书记',
+                }
             },{
-                id:'1',
-                createDate:'2016-11-01',
-                loginName:'123456',
-                password:'123456',
-                name:'刘八',
-                dep:'管理学院',
-                phone:'18376301879',
-                email:'123@123.com',
-                status:0
+                userId:'2',
+                userCreateTime:1575561600000,
+                userAccount:'123456',
+                userName:'李四',
+                userPhone:'13737315945',
+                userEmail:'123@123.com',
+                userStatus:true,
+                department:{
+                  departmentId:'1',
+                  departmentName:'信工学院',
+                  departmentNumber:'1',
+                  departmentLevel:'1',
+                },
+                Position:{
+                  positionId:'1',
+                  positionName:'书记',
+                }
             },{
-                id:'1',
-                createDate:'2016-11-01',
-                loginName:'123456',
-                password:'123456',
-                name:'刘八',
-                dep:'管理学院',
-                phone:'18376301879',
-                email:'123@123.com',
-                status:0
+                userId:'2',
+                userCreateTime:1575561600000,
+                userAccount:'123456',
+                userName:'李四',
+                userPhone:'13737315945',
+                userEmail:'123@123.com',
+                userStatus:true,
+                department:{
+                  departmentId:'1',
+                  departmentName:'信工学院',
+                  departmentNumber:'1',
+                  departmentLevel:'1',
+                },
+                Position:{
+                  positionId:'1',
+                  positionName:'书记',
+                }
             },{
-                id:'1',
-                createDate:'2016-11-01',
-                loginName:'123456',
-                password:'123456',
-                name:'刘八',
-                dep:'管理学院',
-                phone:'18376301879',
-                email:'123@123.com',
-                status:0
+                userId:'2',
+                userCreateTime:1575561600000,
+                userAccount:'123456',
+                userName:'李四',
+                userPhone:'13737315945',
+                userEmail:'123@123.com',
+                userStatus:true,
+                department:{
+                  departmentId:'1',
+                  departmentName:'信工学院',
+                  departmentNumber:'1',
+                  departmentLevel:'1',
+                },
+                Position:{
+                  positionId:'1',
+                  positionName:'书记',
+                }
             },{
-                id:'1',
-                createDate:'2016-11-01',
-                loginName:'123456',
-                password:'123456',
-                name:'刘八',
-                dep:'管理学院',
-                phone:'18376301879',
-                email:'123@123.com',
-                status:0
-            },{
-                id:'1',
-                createDate:'2016-11-01',
-                loginName:'123456',
-                password:'123456',
-                name:'刘八',
-                dep:'管理学院',
-                phone:'18376301879',
-                email:'123@123.com',
-                status:0
-            },{
-                id:'1',
-                createDate:'2016-11-01',
-                loginName:'123456',
-                password:'123456',
-                name:'刘八',
-                dep:'管理学院',
-                phone:'18376301879',
-                email:'123@123.com',
-                status:0
-            },{
-                id:'1',
-                createDate:'2016-11-01',
-                loginName:'123456',
-                password:'123456',
-                name:'刘八',
-                dep:'管理学院',
-                phone:'18376301879',
-                email:'123@123.com',
-                status:0
+                userId:'2',
+                userCreateTime:1575561600000,
+                userAccount:'123456',
+                userName:'李四',
+                userPhone:'13737315945',
+                userEmail:'123@123.com',
+                userStatus:true,
+                department:{
+                  departmentId:'1',
+                  departmentName:'信工学院',
+                  departmentNumber:'1',
+                  departmentLevel:'1',
+                },
+                Position:{
+                  positionId:'1',
+                  positionName:'书记',
+                }
             },
         ],
         dialogVisible:false
       }
     },
+    watch:{
+      createDate:(newold)=>{
+          console.log(newold[0].getTime())
+      }
+    },
     methods: {
-      filterStatus(value, row) {
-        return row.status == value;
+       handleEdit(index, row) {
+        console.log(index, row);
       },
-      onSubmit() {
-        console.log('submit!');
-        console.log(this.formInline.createDate[0].getTime());
+      handleDelete(index, row) {
+        console.log(index, row);
+      },
+      filterStatus(value, row) {
+        return row.userStatus == value;
       },
       createUser(){
           this.dialogVisible = true
-      },
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
       }
-    },
+      
+    }
   }
 </script>
 

@@ -9,15 +9,11 @@
                 <el-col :xs="18" :sm="14" :md="10" :lg="8" :xl="8" >
                     <el-form ref="loginForm" label-position="left" :model="form" :rules="rules" label-width="80px" class="login-box">
                     <h3 class="login-title">欢迎登录</h3>
-                    <el-form-item label="登陆名" prop="userLoginName">
-                        <el-input v-model="form.userLoginName" placeholder="请输入用户名"></el-input>
+                    <el-form-item label="登陆名" prop="userAccount">
+                        <el-input v-model="form.userAccount" placeholder="请输入用户名"></el-input>
                     </el-form-item>
                     <el-form-item label="密码" prop="userPassword">
-                        <el-input v-model="form.userPassword" placeholder="请输入密码"></el-input>
-                    </el-form-item>
-                    <el-form-item label="登录方式">
-                        <el-radio v-model="radio" label="1">用户登录</el-radio>
-                        <el-radio v-model="radio" label="2">管理员登录</el-radio>
+                        <el-input v-model="form.userPassword" type="password" placeholder="请输入密码"></el-input>
                     </el-form-item>
                     <el-form-item >
                         <el-button type="primary" @click="login('loginForm')">登陆</el-button>
@@ -33,12 +29,11 @@
 export default {
     data() {
         return {
-             radio: '1',
             form:{
-                userLoginName:'',userPassword:''
+                userAccount:'',userPassword:''
             },
              rules: {
-                userLoginName: [
+                userAccount: [
                     {required: true, message: '账号不可为空', trigger: 'blur'}
                 ],
                 userPassword: [
@@ -51,12 +46,32 @@ export default {
         login(formName){
             this.$refs[formName].validate((valid)=>{
                 if(valid){
-                    if(this.radio=='1'){
-                        this.$router.push({path:'/userHome'})
-                    }
-                    else{
-                        this.$router.push({path:'/adminHome'})
-                    }
+                    this.axios.post("/user/userLogin",this.form)
+                    .then((res)=>{
+                        console.log(res)
+                        if(res.data.status == 0){
+                            sessionStorage.setItem("userInfo",JSON.stringify(res.data.data))
+                            //登录成功
+                            if(res.data.data.position === '管理员'){
+                                this.$router.push({path:'/adminHome'})
+                            }
+                            else{
+                                this.$router.push({path:'/userHome'})
+                            }
+                        }
+                        else{
+                            this.$message({
+                            message: res.data.msg,
+                            type: 'error'
+                        });
+                        }
+                    })
+                    .catch((res)=>{
+                         this.$message({
+                            message: '请求登录失败',
+                            type: 'warning'
+                        });
+                    })
                 }
                 else{
                     //校验未通过,不提交表单
