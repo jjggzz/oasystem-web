@@ -46,7 +46,7 @@ export default {
         login(formName){
             this.$refs[formName].validate((valid)=>{
                 if(valid){
-                    this.axios.post("/user/userLogin",this.form)
+                    this.axios.post("/authentication/userLogin",this.form)
                     .then((res)=>{
                         console.log(res)
                         if(res.data.status == 0){

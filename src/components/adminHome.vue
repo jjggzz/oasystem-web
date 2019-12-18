@@ -60,22 +60,32 @@
       <!-- 个人信息 -->
       <el-drawer
         title="个人信息"
-        :before-close="handleClose"
+        :before-close="cancelForm"
         :visible.sync="dialog"
         direction="rtl"
         custom-class="demo-drawer"
         ref="drawer"
         >
         <div class="photo">
-          <el-image
-          class="touyin"
-          style="width: 100px; height: 100px;border-radius: 50%"
-          :src="accountInfo.portrait==null||accountInfo.portrait===''?'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png':accountInfo.portrait"
-          :fit="'cover'"></el-image>
-          <div style="padding: 15px">
-          <el-button>更换头像</el-button>
+          <el-upload
+            class="avatar-uploader"
+            :action="'http://localhost:8081/oasystem/user/uploadPortrait/'+this.accountInfo.userId"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <el-image
+            v-if="accountInfo.portrait != null"
+            class="touyin"
+            style="width: 100px; height: 100px;border-radius: 50%"
+            :src="accountInfo.portrait"
+            :fit="'cover'"></el-image>
+          <div v-else class="touyin"
+          style="width: 100px; height: 100px;border-radius: 50%">
+            <i class="el-icon-plus avatar-uploader-icon"></i>
           </div>
+          </el-upload>
           </div>
+          <!-- 个人名片 -->
         <div class="demo-drawer__content">
           <el-form :model="accountInfo" label-position="right">
             <el-form-item label="用户名" :label-width="formLabelWidth">
@@ -99,7 +109,7 @@
           </el-form>
           <div class="demo-drawer__footer">
             <el-button @click="cancelForm">取 消</el-button>
-            <el-button type="primary" @click="$refs.drawer.closeDrawer()" :loading="loading">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
+            <el-button type="primary" @click="updateAccountInfo" :loading="loading">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
           </div>
         </div>
       </el-drawer>
@@ -116,7 +126,7 @@ export default {
   data() {
     //ajax校验原密码是否正确
     var checkPasswordIsCorrect = (rule,value,callback)=>{
-        this.axios.post("user/checkPassword",{userPassword:value})
+        this.axios.post("/authentication/checkPassword",{userPassword:value})
         .then((res)=>{  
           if(res.data.status == 0){
             callback()
@@ -165,6 +175,7 @@ export default {
       loading: false,
       default_active: '/adminHome/adminExclusive',
       accountInfo: {
+        userId:'',
         portrait: '',
         position: '',
         userAccount:'',
@@ -178,6 +189,29 @@ export default {
     }
   },
   methods: {
+    //头像上传成功处理函数
+     handleAvatarSuccess(res, file) {
+       console.log(res)
+        this.$message({
+            message: res.msg,
+            type: 'info'
+          })
+      this.getUserPublicInfo()
+        // this.portrait = URL.createObjectURL(file.raw);
+      },
+    //上传头像格式校验
+    beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      },
     clearUpdatePassword(){
       //将表单清空
       this.updatePasswordForm.oldPassword = ''
@@ -185,11 +219,54 @@ export default {
       this.updatePasswordForm.rePassword = ''
       this.dialogFormVisible = false
     },
+    //修改账号信息
+    updateAccountInfo(){
+        this.axios.put("/user/"+this.accountInfo.userId,
+        {userName:this.accountInfo.userName,
+        userEmail:this.accountInfo.userEmail,
+        userPhone:this.accountInfo.userPhone})
+        .then((res)=>{
+          if(res.data.status == 0){
+            //修改成功弹窗显示
+            this.$message({
+              message: res.data.msg,
+              type: 'success'
+            })
+          }
+          else{
+            //失败重新获取用户信息
+             this.$message({
+                message: res.data.msg,
+                type: 'error'
+              })
+              this.getUserPublicInfo()
+          }
+        })
+        .catch((res)=>{
+          this.$message({
+            message: '修改个人信息请求失败',
+            type: 'warning'
+          })
+        })
+
+    },
+    getUserPublicInfo(){
+      this.axios.get("/user/userPublicInfo/"+this.accountInfo.userId)
+      .then((res)=>{
+          if(res.data.status == 0){
+            sessionStorage.setItem("userInfo",JSON.stringify(res.data.data))
+            this.accountInfo = JSON.parse(sessionStorage.getItem("userInfo"))
+          }
+      })
+      .catch((res)=>{
+
+      })
+    },
     //修改密码
     updatePassword(formName){
       this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.axios.put("/user/updatePassword",{userPassword:this.updatePasswordForm.newPassword})
+            this.axios.put("/authentication/updatePassword",{userPassword:this.updatePasswordForm.newPassword})
             .then((res)=>{
               if(res.data.status==0){
                 this.$message({
@@ -225,24 +302,9 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
-    handleClose(done) {
-      if (this.loading) {
-        return;
-      }
-        this.loading = true;
-      this.timer = setTimeout(() => {
-        done();
-        // 动画关闭需要一定的时间
-        setTimeout(() => {
-          this.loading = false;
-        }, 400);
-      }, 2000);
-
-    },
     cancelForm() {
       this.loading = false;
       this.dialog = false;
-      clearTimeout(this.timer);
     }
   },
   created() {

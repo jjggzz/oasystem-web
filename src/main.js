@@ -8,6 +8,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 import './css/mystyle.css'
+import './css/icon/iconfont.css'
 
 Vue.use(ElementUI)
 
