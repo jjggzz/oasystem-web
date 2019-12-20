@@ -4,7 +4,8 @@ import login from './components/login'
 import adminHome from './components/adminHome'
 import userHome from './components/userHome'
 import userManage from './components/adminpage/userManage'
-import adminExclusive from './components/adminpage/adminExclusive'
+import departmentManage from './components/adminpage/departmentManage'
+import positionManage from './components/adminpage/positionManage'
 
 Vue.use(Router)
 
@@ -20,7 +21,7 @@ export default new Router({
     },
     {
       path: '/adminHome',
-      redirect:'/adminHome/adminExclusive',
+      redirect:'/adminHome/userManage',
       component:adminHome,
       children:[
         {
@@ -28,8 +29,12 @@ export default new Router({
           component:userManage
         },
         {
-          path:'adminExclusive',
-          component:adminExclusive
+          path:'departmentManage',
+          component:departmentManage
+        },
+        {
+          path:'positionManage',
+          component:positionManage
         }
       ]
     },

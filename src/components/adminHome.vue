@@ -12,32 +12,30 @@
         :router="true"
         active-text-color="#ffd04b"
         >
-        <el-menu-item index="/adminHome/adminExclusive">管理员专属</el-menu-item>
         <el-menu-item index="/adminHome/userManage" >用户管理</el-menu-item>
-        <el-menu-item index="3">部门管理</el-menu-item>
-        <el-submenu index="4">
-          <template slot="title">结构管理</template>
-          <el-submenu index="4-1">
-            <template slot="title">人员管理</template>
-            <el-menu-item index="2-4-1">部门分配</el-menu-item>
-            <el-menu-item index="2-4-2">职位分配</el-menu-item>
-          </el-submenu>
-          <el-menu-item index="4-2">职务管理</el-menu-item>
-          <el-menu-item index="4-3">流程管理</el-menu-item>
-      </el-submenu>
-        <el-menu-item index="5">权限管理</el-menu-item>
+        <el-menu-item index="/adminHome/departmentManage">部门管理</el-menu-item>
+        <el-menu-item index="/adminHome/positionManage">职务管理</el-menu-item>
         <el-menu-item index="6">论坛管理</el-menu-item>
-         <el-submenu index="7" >
+        <el-menu-item index="7">流程管理</el-menu-item>
+         <el-submenu index="8" >
             <template slot="title">个人中心</template>
             <el-menu-item  @click="dialog = true">个人信息</el-menu-item>
-            <el-menu-item index="7-2">未读消息</el-menu-item>
+            <el-menu-item index="8-2">未读消息</el-menu-item>
             <el-menu-item @click="dialogFormVisible = true">修改密码</el-menu-item>
           </el-submenu>
+        <el-menu-item @click="dialogcalendarVisible = true">日历</el-menu-item>
       </el-menu>
     </el-header>
     <el-main > 
       <!-- 页面主体 -->
       <router-view></router-view>
+      <el-drawer
+        title="日历"
+        :visible.sync="dialogcalendarVisible"
+        direction="rtl"
+        size="50%">
+        <el-calendar v-model="calendar"></el-calendar>
+      </el-drawer>
       <!-- 修改密码 -->
       <el-dialog title="修改密码" :visible.sync="dialogFormVisible">
       <el-form :model="updatePasswordForm" :rules="updatePasswordFormRule" ref='updatePasswordForm'>
@@ -152,6 +150,8 @@ export default {
         }
     }
     return {
+      dialogcalendarVisible: false,
+      calendar:new Date(),
       dialogTableVisible: false,
       dialogFormVisible: false,
       updatePasswordForm: {
@@ -173,7 +173,7 @@ export default {
       },
       dialog: false,
       loading: false,
-      default_active: '/adminHome/adminExclusive',
+      default_active: '/adminHome/userManage',
       accountInfo: {
         userId:'',
         portrait: '',

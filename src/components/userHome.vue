@@ -41,6 +41,7 @@
             <el-menu-item index="7-2">未读消息</el-menu-item>
             <el-menu-item @click="dialogFormVisible = true">修改密码</el-menu-item>
           </el-submenu>
+          <el-menu-item  @click="dialogcalendarVisible = true">日历</el-menu-item>
           <el-menu-item  class="right">
             <i class="el-icon-switch-button"></i>
           </el-menu-item>
@@ -48,6 +49,13 @@
     </el-header>
     <el-main>
       <router-view></router-view>
+      <el-drawer
+        title="日历"
+        :visible.sync="dialogcalendarVisible"
+        direction="rtl"
+        size="50%">
+        <el-calendar v-model="calendar"></el-calendar>
+      </el-drawer>
       <!-- 修改密码 -->
       <el-dialog title="修改密码" :visible.sync="dialogFormVisible">
       <el-form :model="updatePasswordForm" :rules="updatePasswordFormRule" ref='updatePasswordForm'>
@@ -160,6 +168,8 @@ export default {
         }
     }
     return {
+      dialogcalendarVisible: false,
+      calendar:new Date(),
       dialogTableVisible: false,
       dialogFormVisible: false,
       updatePasswordForm: {
