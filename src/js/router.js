@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import login from './components/login'
-import adminHome from './components/adminHome'
-import userHome from './components/userHome'
-import userManage from './components/adminpage/userManage'
-import departmentManage from './components/adminpage/departmentManage'
-import positionManage from './components/adminpage/positionManage'
+import login from '../components/login'
+import adminHome from '../components/adminHome'
+import userHome from '../components/userHome'
+import userManage from '../components/adminpage/userManage'
+import departmentManage from '../components/adminpage/departmentManage'
+import positionManage from '../components/adminpage/positionManage'
+import flowManage from '../components/adminpage/flow/flowManage'
+import addFlow from '../components/adminpage/flow/addFlow'
 
 Vue.use(Router)
 
@@ -35,6 +37,14 @@ export default new Router({
         {
           path:'positionManage',
           component:positionManage
+        },
+        {
+          path:'flowManage',
+          component:flowManage
+        },
+        {
+          path:'addFlow',
+          component:addFlow,
         }
       ]
     },

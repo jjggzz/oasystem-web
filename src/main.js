@@ -1,22 +1,29 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+//router
+import router from './js/router.js'
 //导入elementUI
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+Vue.use(ElementUI)
+//axios
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-
-import './css/mystyle.css'
-import './css/icon/iconfont.css'
-
-Vue.use(ElementUI)
-
 //设置全局访问路径
 axios.defaults.baseURL= 'http://localhost:8081/oasystem'
 //访问携带cookie
 axios.defaults.withCredentials = true
 Vue.use(VueAxios, axios)
+
+//自己的css
+import './css/mystyle.css'
+import './css/icon/iconfont.css'
+//vuex
+import store from './js/store.js'
+
+
+
+
 //全局日期过滤器
 Vue.filter('dateFormart',function(date,formart ='yyyy-MM-dd HH:mm:ss'){
   var dt = new Date(date);
@@ -42,6 +49,7 @@ Vue.filter('dateFormart',function(date,formart ='yyyy-MM-dd HH:mm:ss'){
 Vue.config.productionTip = false
 
 new Vue({
+  store,
   router,
   render: h => h(App)
 }).$mount('#app')
