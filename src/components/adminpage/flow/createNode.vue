@@ -11,7 +11,7 @@
                     <el-form-item label="节点描述" prop="flowNodeDescription">
                         <el-input type="textarea" v-model="flowNode.flowNodeDescription"></el-input>
                     </el-form-item>
-                    <el-form-item label="审批人职位" prop="position.positionId">
+                    <el-form-item label="审批人职位" >
                         <el-select v-model="flowNode.position.positionId" clearable placeholder="请选择">
                             <el-option
                             v-for="item in positionList"
@@ -63,12 +63,7 @@ export default {
                 ],
                 flowNodeDescription:[
                     {required: true, message: '节点描述必填', trigger: 'blur'}
-                ],
-                position:{
-                    positionId:[
-                        {required: true, message: '审批人职位必选', trigger: 'blur'}
-                    ]
-                }
+                ]
             },
             flowNodeList:[]
         }
@@ -138,6 +133,7 @@ export default {
                         message: res.data.msg
                     }); 
                     this.positionList = res.data.data.positionList
+                    this.$store.commit('updatePositionList',this.positionList)
                 }
                 else{
                     this.$message({

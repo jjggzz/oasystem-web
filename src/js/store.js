@@ -11,12 +11,6 @@ const store = new Vuex.Store({
         flow:{
             flowName:'',
             flowDescription:''
-        },
-        flowNodeList:[]
-    },
-    getters:{
-        flowNodeList:state=>{
-            return state.flowNodeList
         }
     },
     mutations:{
@@ -28,13 +22,13 @@ const store = new Vuex.Store({
         UpdateFlowDescription(state,flowDescription){
             state.flow.flowDescription = flowDescription
         },
-        //清空流程节点列表
-        resetFlowNodeList(state){
-            state.flowNodeList = []
-        },
         //更新流程节点表
-        updateFlowNodeList(state,flowNodelist){
-            state.flowNodelist = flowNodelist
+        updateFlowNodeList(state,flowNodeList){
+            state.flowNodeList = flowNodeList
+        },
+        //更新职位列表
+        updatePositionList(state,positionList){
+            state.positionList = positionList
         },
         updateCurrentSteps(state,currentSteps){
             state.currentSteps = currentSteps
