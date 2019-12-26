@@ -1,7 +1,9 @@
 <template>
   <el-container>
         <el-main>
-            <el-card class="box-card">
+            <el-row>
+                <el-col :span="10" :offset="7">
+                    <el-card class="box-card">
                  <div slot="header" class="clearfix">
                     <span>流程信息</span>
                     <el-button style="float: right; padding: 10px 10px" type="success" @click="commit">提交</el-button>
@@ -20,6 +22,9 @@
                     职位名：{{item.flowNodeName}}&nbsp&nbsp&nbsp 职位描述：{{item.flowNodeDescription}}&nbsp&nbsp&nbsp 审批人职位：{{showPositionName(item.position.positionId)}}
                 </div>
             </el-card>
+                </el-col>
+            </el-row>
+            
         </el-main>
     </el-container>
 </template>
@@ -110,6 +115,6 @@ export default {
   }
 
   .box-card {
-    width: 650px;
+    width: 100%;
   }
 </style>
