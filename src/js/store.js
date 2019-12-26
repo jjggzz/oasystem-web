@@ -11,6 +11,16 @@ const store = new Vuex.Store({
         flow:{
             flowName:'',
             flowDescription:''
+        },
+        articleList:[]
+    },
+    getters:{
+        getArticleListByType:(state)=>(type)=>{
+            return state.articleList.filter((item)=>{
+                if(item.articleType == type){
+                    return item
+                }
+            })
         }
     },
     mutations:{
@@ -32,6 +42,10 @@ const store = new Vuex.Store({
         },
         updateCurrentSteps(state,currentSteps){
             state.currentSteps = currentSteps
+        },
+        //更新文章列表
+        updateArticleList(state,articleList){
+            state.articleList = articleList
         }
     }
 })

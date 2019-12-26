@@ -6,7 +6,8 @@
       <el-main>
         <el-table
             :data="showList"
-            style="width: 100%">
+            style="width: 100%"
+            height="540">
              <el-table-column type="expand">
             <template slot-scope="props">
                 <el-form label-position="left" inline class="demo-table-expand">

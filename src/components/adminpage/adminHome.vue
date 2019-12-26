@@ -15,7 +15,7 @@
         <el-menu-item index="/adminHome/userManage" >用户管理</el-menu-item>
         <el-menu-item index="/adminHome/departmentManage">部门管理</el-menu-item>
         <el-menu-item index="/adminHome/positionManage">职务管理</el-menu-item>
-        <el-menu-item index="6">论坛管理</el-menu-item>
+        <el-menu-item index="/adminHome/articleManage">文章管理</el-menu-item>
         <el-menu-item index="/adminHome/flowManage">流程管理</el-menu-item>
          <el-submenu index="8" >
             <template slot="title">个人中心</template>

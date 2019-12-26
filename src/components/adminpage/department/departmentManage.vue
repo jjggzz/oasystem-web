@@ -7,8 +7,8 @@
         <!-- 添加部门对话框 -->
         <el-dialog title="添加部门" :visible.sync="addDepFormVisible" width="30%" center>
           <div class="add-dep-from">
-          <el-form :label-position="'top'" :model="addDepForm">
-             <el-form-item label="部门级别">
+          <el-form :label-position="'top'" :model="addDepForm" ref="addDepForm" :rules="addDepFormRules"> 
+             <el-form-item label="部门级别" prop="departmentLevel">
                <el-select v-model="addDepForm.departmentLevel" placeholder="请选择">
                  <el-option key="1" :value=1 :label="'一级部门'"></el-option>
                  <el-option key="2" :value=2 :label="'二级部门'"></el-option>
@@ -16,7 +16,7 @@
                  <el-option key="4" :value=4 :label="'四级部门'"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item v-if="addDepForm.departmentLevel!=1" label="父部门">
+              <el-form-item prop="departmentParent.departmentId" v-if="addDepForm.departmentLevel!=1" label="父部门">
                 <el-select v-model="addDepForm.departmentParent.departmentId" clearable placeholder="请选择">
                   <el-option
                     v-for="item in parentDepList"
@@ -26,58 +26,58 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="部门名">
+              <el-form-item label="部门名" prop="departmentName">
                 <el-input v-model="addDepForm.departmentName" placeholder="请输入部门名"></el-input>
               </el-form-item>
           </el-form>
           </div>
           <div slot="footer" class="dialog-footer">
             <el-button @click="clearAddDepForm">取 消</el-button>
-            <el-button type="primary" @click="addDepartement">确 定</el-button>
+            <el-button type="primary" @click="addDepartement('addDepForm')">确 定</el-button>
           </div>
         </el-dialog>
           <!-- 表格区域 -->
         <el-table
-        :data="showDepartmentList"
-        style="width: 100%"
-        height="540">
-        <el-table-column
-        type="index"
-        label="序号">
+          :data="showDepartmentList"
+          style="width: 100%"
+          height="540">
+          <el-table-column
+          type="index"
+          label="序号">
+          </el-table-column>
+          <el-table-column
+          prop="departmentName"
+          label="部门名">
+          </el-table-column>
+          <el-table-column
+          prop="departmentNumber"
+          label="部门人数">
+          </el-table-column>
+          <el-table-column
+          label="父部门">
+          <template slot-scope="scope">
+            {{scope.row.departmentParent==null?"无":scope.row.departmentParent.departmentName}}
+          </template>
+          </el-table-column>
+          <el-table-column
+          prop="departmentLevel"
+          label="部门级别">
+          </el-table-column>
+          <el-table-column
+          align="right">
+          <template slot="header" slot-scope="scope">
+            <el-input
+              v-model="search"
+              size="mini"
+              placeholder="输入关键字搜索"/>
+          </template>
+          <template slot-scope="scope">
+            <el-button size="mini" type="primary" plain>详情</el-button>
+            <el-button size="mini" type="warning"@click="updateDep(scope.$index, scope.row)" plain>更名</el-button>
+            <el-button size="mini" type="danger" @click="deleteDep(scope.$index, scope.row)" plain>删除</el-button>
+          </template>
         </el-table-column>
-        <el-table-column
-        prop="departmentName"
-        label="部门名">
-        </el-table-column>
-        <el-table-column
-        prop="departmentNumber"
-        label="部门人数">
-        </el-table-column>
-        <el-table-column
-        label="父部门">
-        <template slot-scope="scope">
-          {{scope.row.departmentParent==null?"无":scope.row.departmentParent.departmentName}}
-        </template>
-        </el-table-column>
-        <el-table-column
-        prop="departmentLevel"
-        label="部门级别">
-        </el-table-column>
-        <el-table-column
-        align="right">
-        <template slot="header" slot-scope="scope">
-          <el-input
-            v-model="search"
-            size="mini"
-            placeholder="输入关键字搜索"/>
-        </template>
-        <template slot-scope="scope">
-          <el-button size="mini" type="primary" plain>详情</el-button>
-          <el-button size="mini" type="warning"@click="updateDep(scope.$index, scope.row)" plain>更名</el-button>
-          <el-button size="mini" type="danger" @click="deleteDep(scope.$index, scope.row)" plain>删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+      </el-table>
     </el-main>
     </el-container>
 </template>
@@ -116,6 +116,19 @@
             departmentId:null
           },
           departmentName:''
+        },
+        addDepFormRules:{
+          departmentLevel:[
+            {required: true, message: '部门级别必选', trigger: 'blur'}
+          ],
+          departmentName:[
+             { required: true, message: '部门名不能为空', trigger: 'blur' }
+          ],
+          departmentParent:{
+            departmentId:[
+              { required: true, message: '父部门必选', trigger: 'blur' }
+            ]
+          }
         },
         addDepFormVisible:false,
         search: '',
@@ -210,33 +223,39 @@
         this.addDepFormVisible = false
       },
       //添加部门
-      addDepartement(){
-        console.log(this.addDepForm)
-        this.axios.post("/department/add",this.addDepForm)
-        .then((res)=>{
-          console.log(res)
-          if(res.data.status == 0){
-            this.departmentList.push(res.data.data.newDepartment)
-            this.$message({
-              type: 'success',
-              message: res.data.msg
-            }); 
-          }
-          else{
-            this.$message({
-              type: 'error',
-              message: res.data.msg
-            }); 
-          }
+      addDepartement(formName){
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.axios.post("/department/add",this.addDepForm)
+            .then((res)=>{
+              console.log(res)
+              if(res.data.status == 0){
+                this.departmentList.push(res.data.data.newDepartment)
+                this.$message({
+                  type: 'success',
+                  message: res.data.msg
+                }); 
+              }
+              else{
+                this.$message({
+                  type: 'error',
+                  message: res.data.msg
+                }); 
+              }
 
-          this.clearAddDepForm()
-        })
-        .catch((res)=>{
-          this.$message({
-              type: 'error',
-              message: "请求添加部门失败"
-            }); 
-        })
+              this.clearAddDepForm()
+            })
+            .catch((res)=>{
+              this.$message({
+                  type: 'error',
+                  message: "请求添加部门失败"
+                }); 
+            })
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
         
       },
       //获取部门列表

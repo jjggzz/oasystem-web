@@ -1,26 +1,9 @@
 <template>
   <el-container>
-      <el-main>
-          <!-- 职位信息 -->
-          <el-dialog
-            title="提示"
-            :visible.sync="dialogVisible"
-            width="50%">
-            <div class="position-info" >
-                <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                    <span>{{showInfo.positionName}}</span>
-                </div>
-                <div v-for="(o,index) in showInfo.permissionList" :key="o.permissionId" style="width:50%;display: inline-block" class="text item">
-                        {{'权限'+(index+1)+'：' + o.permissionName }}
-                </div>
-                </el-card>
-            </div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-            </span>
-          </el-dialog>
+      <el-header>
+        <el-button  type="success" @click="dialogaddVisible = true">添加职位</el-button>
+      </el-header>
+      <el-main style="padding:0px">
           <!-- 修改职位 -->
           <el-dialog title="修改职位" :visible.sync="dialogFormVisible">
             <el-form :model="alterForm">
@@ -42,77 +25,92 @@
                 <el-button type="primary" @click="commitAlter">确 定</el-button>
             </div>
         </el-dialog>
-          <el-row :gutter="20">
-            <el-col :span="12">
-                <!-- 显示列表 -->
-                <el-table
-                    :data="showList"
-                    style="width: 100%"
-                    height="600">
-                    <el-table-column
-                    type="index"
-                    label="序号">
-                    </el-table-column>
-                    <el-table-column
-                    label="职位id"
-                    prop="positionId">
-                    </el-table-column>
-                    <el-table-column
-                    label="职位名"
-                    prop="positionName">
-                    </el-table-column>
-                    <el-table-column
-                    align="right">
-                    <template slot="header" slot-scope="scope">
-                        <el-input
-                        v-model="search"
-                        size="mini"
-                        placeholder="输入关键字搜索"/>
-                    </template>
-                    <template slot-scope="scope">
-                        <el-button
-                        size="mini"
-                        plain
-                        @click="alterPosition(scope.$index, scope.row)">修改</el-button>
-                        <el-button
-                        size="mini"
-                        type="primary"
-                        plain
-                        @click="infoPosition(scope.$index, scope.row)">详情</el-button>
-                        <el-button
-                        size="mini"
-                        type="danger"
-                        plain=""
-                        @click="delPosition(scope.$index, scope.row)">删除</el-button>
-                    </template>
-                    </el-table-column>
-                </el-table>
-            </el-col>
-            <el-col :span="12">
-                <!-- 创建职位表单 -->
-                <el-form   class="writer" :model="form" label-width="80px">
-                    <el-form-item >
-                        <p class="font">创建职位</p>
-                    </el-form-item>     
-                    <el-form-item label="职位名称" label-width="80px">
-                        <el-input  v-model="form.positionName"></el-input>
-                    </el-form-item>
-                    <el-form-item label="权限">
-                        <el-transfer
-                            filterable
-                            :filter-method="filterMethod"
-                            filter-placeholder='请输入关键字'
-                            v-model="form.permissionId"
-                            :data="getdata()">
-                        </el-transfer>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="addPosition">立即创建</el-button>
-                        <el-button @click="resetAddPosition">重置</el-button>
-                    </el-form-item>
-                </el-form>
-            </el-col>
-        </el-row>
+        <!-- 显示列表 -->
+        <el-table
+            :data="showList"
+            style="width: 100%"
+            height="540">
+            <el-table-column
+            type="index"
+            label="序号">
+            </el-table-column>
+            <el-table-column
+            label="职位id"
+            prop="positionId">
+            </el-table-column>
+            <el-table-column
+            label="职位名"
+            prop="positionName">
+            </el-table-column>
+            <el-table-column
+            align="right">
+            <template slot="header" slot-scope="scope">
+                <el-input
+                v-model="search"
+                size="mini"
+                placeholder="输入关键字搜索"/>
+            </template>
+            <template slot-scope="scope">
+                <el-button
+                size="mini"
+                plain
+                @click="alterPosition(scope.$index, scope.row)">修改</el-button>
+                <el-button
+                size="mini"
+                type="primary"
+                plain
+                @click="infoPosition(scope.$index, scope.row)">详情</el-button>
+                <el-button
+                size="mini"
+                type="danger"
+                plain=""
+                @click="delPosition(scope.$index, scope.row)">删除</el-button>
+            </template>
+            </el-table-column>
+        </el-table>
+          <!-- 职位信息 -->
+          <el-dialog
+            title="提示"
+            :visible.sync="dialogVisible"
+            width="50%">
+            <div class="position-info" >
+                <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>{{showInfo.positionName}}</span>
+                </div>
+                <div v-for="(o,index) in showInfo.permissionList" :key="o.permissionId" style="width:50%;display: inline-block" class="text item">
+                        {{'权限'+(index+1)+'：' + o.permissionName }}
+                </div>
+                </el-card>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
+          </el-dialog>
+        <!-- 创建职位表单 -->
+        <el-dialog
+            title="创建职位"
+            :visible.sync="dialogaddVisible"
+            width="45%">
+            <el-form  :model="form" ref="form" :rules="formRules" label-width="80px">
+                <el-form-item label="职位名称" label-width="80px" prop="positionName" >
+                    <el-input  v-model="form.positionName"></el-input>
+                </el-form-item>
+                <el-transfer
+                    filterable
+                    :filter-method="filterMethod"
+                    filter-placeholder='请输入关键字'
+                    v-model="form.permissionId"
+                    :data="getdata()">
+                </el-transfer>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="resetAddPosition">取 消</el-button>
+                <el-button type="primary" @click="addPosition('form')">确 定</el-button>
+            </span>
+        </el-dialog>
+                
       </el-main>
   </el-container>
 </template>
@@ -135,6 +133,7 @@ export default {
                 positionName:'',
                 permissionList:[]
             },
+            dialogaddVisible:false,
             dialogVisible:false,
             alterForm: {
                 positionId:'',
@@ -146,6 +145,11 @@ export default {
             form: {
                 positionName: '',
                 permissionId: [],
+            },
+            formRules:{
+                positionName:[
+                    { required: true, message: '职位名必填', trigger: 'blur' }
+                ]  
             },
             search: '',
             permissionList:[],
@@ -239,6 +243,7 @@ export default {
         resetAddPosition() {
             this.form.positionName = ''
             this.form.permissionId = []
+            this.dialogaddVisible = false
         },
         filterMethod(query, item) {
           return item.label.includes(query) 
@@ -289,29 +294,39 @@ export default {
                 }); 
             })
         },
-        addPosition() {
-            this.axios.post("/position",this.form)
-            .then((res)=>{
-                if(res.data.status == 0){
-                    this.$message({
-                        type: 'success',
-                        message: res.data.msg
-                    }); 
-                    this.getPositionList()
+        addPosition(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.axios.post("/position",this.form)
+                    .then((res)=>{
+                        if(res.data.status == 0){
+                            this.$message({
+                                type: 'success',
+                                message: res.data.msg
+                            }); 
+                            this.getPositionList()
+                            this.resetAddPosition()
+                        }
+                        else{
+                            this.$message({
+                                type: 'error',
+                                message: res.data.msg
+                            }); 
+                        }
+                    })
+                    .catch((res)=>{
+                        this.$message({
+                                type: 'warning',
+                                message: "请求添加职位失败"
+                            }); 
+                    })
+
+                } else {
+                    console.log('error submit!!');
+                    return false;
                 }
-                else{
-                     this.$message({
-                        type: 'error',
-                        message: res.data.msg
-                    }); 
-                }
-            })
-            .catch((res)=>{
-                 this.$message({
-                        type: 'warning',
-                        message: "请求添加职位失败"
-                    }); 
-            })
+            }); 
+            
         }
     },
     created() {
@@ -328,10 +343,6 @@ export default {
         justify-content: center;
         align-items: center;
         flex-direction: row;
-    }
-    .writer{
-        background-color: #fff;
-        height: 600px;
     }
     .font{
         font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;

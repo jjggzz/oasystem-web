@@ -8,6 +8,7 @@ import departmentManage from '../components/adminpage/department/departmentManag
 import positionManage from '../components/adminpage/position/positionManage'
 import flowManage from '../components/adminpage/flow/flowManage'
 import addFlow from '../components/adminpage/flow/addFlow'
+import articleManage from '../components/adminpage/article/articleManage'
 
 Vue.use(Router)
 
@@ -47,6 +48,10 @@ export default new Router({
         {
           path:'addFlow',
           component:addFlow,
+        },
+        {
+          path:'articleManage',
+          component:articleManage,
         }
       ]
     },
