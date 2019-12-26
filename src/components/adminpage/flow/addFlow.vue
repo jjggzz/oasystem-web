@@ -1,14 +1,15 @@
 <template>
   <el-container>
       <el-header>
+        <el-page-header @back="goBack" content="创建流程"></el-page-header>
+      </el-header>
+      <el-main>
         <el-steps :active="currentSteps" simple>
           <el-step title="添加流程" icon="el-icon-edit"></el-step>
           <el-step title="添加节点" icon="el-icon-upload"></el-step>
           <el-step title="设置流程步骤" icon="el-icon-picture"></el-step>
           <el-step title="最终确认" icon="el-icon-picture"></el-step>
         </el-steps>
-      </el-header>
-      <el-main>
         <div v-if='currentSteps == 1'>
           <createFlow></createFlow>
         </div>
@@ -47,7 +48,10 @@ export default {
     }
   },
   methods: {
-
+    goBack() {
+        this.$store.commit('updateCurrentSteps',1)
+        this.$router.back(-1)
+      }
   },
 }
 </script>

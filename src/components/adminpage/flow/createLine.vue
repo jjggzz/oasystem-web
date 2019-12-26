@@ -2,26 +2,24 @@
   <el-container>
       <el-main>
         <el-row :gutter="20">
-              <el-col  :span="10" :offset="2">
-                <div style="height:400px">
+              <el-col  :span="10" :offset="7">
                   <h1 style="text-align: center">节点列表</h1>
                   <div v-for="(item,index) in flowNodeList" :key='index' class="flowNodeList">
                     <el-tag type="info">{{item.flowNodeName}}</el-tag>
                     <el-tag type="info">{{item.flowNodeDescription}}</el-tag>
                     <el-button @click="set(item,index)" size="mini">添加</el-button>
                   </div>
-                </div>
               </el-col>
-               <el-col  :span="10" >
-                 <div style="height:400px">
-                  <h1 style="text-align: center">顺序列表</h1>
-                  <div v-for="(item,index) in orderlyList" :key='index' class="flowNodeList">
-                    <span> 第{{index+1}}节点：<el-tag type="info">{{item.flowNodeName}}</el-tag></span> 
-                    <el-tag type="info">{{item.flowNodeDescription}}</el-tag>
-                    <el-button @click="unSet(item,index)" size="mini">移除</el-button>
-                  </div>
-                </div>
-              </el-col>
+        </el-row>
+        <el-row>
+          <el-col  :span="10" :offset="7">
+              <h1 style="text-align: center">顺序列表</h1>
+              <div v-for="(item,index) in orderlyList" :key='index' class="flowNodeList">
+                <span> 第{{index+1}}节点：<el-tag type="info">{{item.flowNodeName}}</el-tag></span> 
+                <el-tag type="info">{{item.flowNodeDescription}}</el-tag>
+                <el-button @click="unSet(item,index)" size="mini">移除</el-button>
+              </div>
+          </el-col>
         </el-row>
         <el-row>
           <el-col class="btn" :span="24">

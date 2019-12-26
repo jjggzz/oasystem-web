@@ -20,10 +20,12 @@
          <el-submenu index="8" >
             <template slot="title">个人中心</template>
             <el-menu-item  @click="dialog = true">个人信息</el-menu-item>
-            <el-menu-item index="8-2">未读消息</el-menu-item>
             <el-menu-item @click="dialogFormVisible = true">修改密码</el-menu-item>
           </el-submenu>
         <el-menu-item @click="dialogcalendarVisible = true">日历</el-menu-item>
+        <el-menu-item @click="logout"  class="right">
+            <i class="el-icon-switch-button"></i>
+          </el-menu-item>
       </el-menu>
     </el-header>
     <el-main > 
@@ -189,6 +191,32 @@ export default {
     }
   },
   methods: {
+    logout(){
+      this.axios.get('/authentication/userLogout')
+      .then((res)=>{
+        if(res.data.status == 0){
+          this.$message({
+            type:"success",
+            message:res.data.msg
+          })
+          sessionStorage.setItem("userInfo",JSON.stringify({}))
+          this.$router.push({path:'/'})
+        }
+        else{
+          this.$message({
+            type:"error",
+            message:res.data.msg
+          })
+        }
+      })
+      .catch((res)=>{
+         this.$message({
+            type:"error",
+            message:"请求安全退出失败"
+          })
+      })
+      
+    },
     //头像上传成功处理函数
      handleAvatarSuccess(res, file) {
        console.log(res)

@@ -2,7 +2,7 @@
   <el-container>
         <el-main>
             <el-row :gutter="20">
-                <el-col  :span="10" :offset="2">
+                <el-col  :span="10" :offset="7">
                     <h1 class="head">创建第一步所添加流程的节点</h1>
                     <el-form ref="flowNode" :model="flowNode" :rules="flowNodeRules" label-width="100px">
                     <el-form-item label="节点名" prop="flowNodeName">
@@ -24,14 +24,16 @@
                     <el-form-item class="addFlowBtn">
                         <el-button type="info" @click="prev">上一步</el-button>
                         <el-button type="primary" @click="addNodeToList('flowNode')">添加节点</el-button>
+                        <el-button  @click="addNode" type="success">下一步</el-button>
                     </el-form-item>
                     </el-form>
                 </el-col>
-                <el-col :span="10">
+            </el-row>
+            <el-row>
+                <el-col :span="10" :offset="7">
                     <el-card class="box-card">
                         <div slot="header" class="clearfix">
                             <span>节点列表</span>
-                            <el-button style="float: right; padding: 10px 10px" @click="addNode" type="success">下一步</el-button>
                         </div>
                         <div v-for="(item,index) in flowNodeList" :key="index" class="text item">
                             <el-button size="mini" @click="delNode(index)">移除</el-button>节点名：<el-tag>{{item.flowNodeName}}</el-tag>审批人职位：<el-tag>{{showPositionName(item.position.positionId)}}</el-tag>节点描述：<el-tag>{{item.flowNodeDescription}}</el-tag>
