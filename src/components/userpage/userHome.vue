@@ -11,14 +11,10 @@
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b">
-          <el-submenu index="1">
-            <template slot="title">聊天模块</template>
-            <el-menu-item index="1-1">组织聊天</el-menu-item>
-            <el-menu-item index="1-2">部门聊天</el-menu-item>
-          </el-submenu>
+          <el-menu-item index="/userHome/chat" >聊天模块</el-menu-item>
           <el-submenu index="2">
             <template slot="title">通知模块</template>
-            <el-menu-item index="2-1">发送通知</el-menu-item>
+            <el-menu-item index="/userHome/sendNotice">发送通知</el-menu-item>
             <el-menu-item index="2-2">历史通知</el-menu-item>
             <el-menu-item index="2-3">发送通知</el-menu-item>
           </el-submenu>
@@ -116,8 +112,8 @@
             <el-form-item label="邮箱" :label-width="formLabelWidth">
               <el-input v-model="accountInfo.userEmail" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item v-if="accountInfo.userDepartment!=null && accountInfo.userDepartment != '' " label="所属部门" :label-width="formLabelWidth">
-              {{accountInfo.userDepartment}}
+            <el-form-item v-if="accountInfo.userDepartmentName!=null && accountInfo.userDepartmentName != '' " label="所属部门" :label-width="formLabelWidth">
+              {{accountInfo.userDepartmentName}}
             </el-form-item>
             <el-form-item label="职位" :label-width="formLabelWidth">
               {{accountInfo.position}}
@@ -130,10 +126,10 @@
         </div>
       </el-drawer>
     </el-main>
-    <el-footer>
-      <!-- 页脚部分 -->
+    <!-- <el-footer>
+      页脚部分
       <p class="footer">作者邮箱:1945282561@qq.com 后端框架:springboot(ssm) ui框架:elementUI js框架:vue</p>
-    </el-footer>
+    </el-footer> -->
   </el-container>
 </template>
 
@@ -189,7 +185,7 @@ export default {
           { validator: checkRePassword, trigger: 'blur' }
         ]
       },
-      activeIndex2: '1-1',
+      activeIndex2: '/userHome/chat',
       formLabelWidth: '80px',
       timer: null,
       dialog: false,
@@ -202,7 +198,7 @@ export default {
         userEmail:'',
         userName:'',
         userPhone:'',
-        userDepartment:''
+        userDepartmentName:''
       },
     }
   },
@@ -283,8 +279,8 @@ export default {
                 message: res.data.msg,
                 type: 'error'
               })
-              this.getUserPublicInfo()
           }
+          this.getUserPublicInfo()
         })
         .catch((res)=>{
           this.$message({
@@ -381,7 +377,6 @@ export default {
   }
   .demo-drawer__footer{
     width: 100%;
-    position: absolute;
     bottom: 0px;
     padding-bottom: 20px;
     display: flex;

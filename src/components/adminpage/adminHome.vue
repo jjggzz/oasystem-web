@@ -100,8 +100,8 @@
             <el-form-item label="邮箱" :label-width="formLabelWidth">
               <el-input v-model="accountInfo.userEmail" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item v-if="accountInfo.userDepartment!=null && accountInfo.userDepartment != '' " label="所属部门" :label-width="formLabelWidth">
-              {{accountInfo.userDepartment}}
+            <el-form-item v-if="accountInfo.userDepartmentName!=null && accountInfo.userDepartmentName != '' " label="所属部门" :label-width="formLabelWidth">
+              {{accountInfo.userDepartmentName}}
             </el-form-item>
             <el-form-item label="职位" :label-width="formLabelWidth">
               {{accountInfo.position}}
@@ -184,7 +184,7 @@ export default {
         userEmail:'',
         userName:'',
         userPhone:'',
-        userDepartment:''
+        userDepartmentName:''
       },
       formLabelWidth: '80px',
       timer: null,
@@ -267,8 +267,8 @@ export default {
                 message: res.data.msg,
                 type: 'error'
               })
-              this.getUserPublicInfo()
           }
+          this.getUserPublicInfo()
         })
         .catch((res)=>{
           this.$message({

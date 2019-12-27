@@ -12,12 +12,20 @@ const store = new Vuex.Store({
             flowName:'',
             flowDescription:''
         },
-        articleList:[]
+        articleList:[],
+        messageList:[]
     },
     getters:{
         getArticleListByType:(state)=>(type)=>{
             return state.articleList.filter((item)=>{
                 if(item.articleType == type){
+                    return item
+                }
+            })
+        },
+        getMessageListByTargetId:(state)=>(targetId)=>{
+            return state.messageList.filter((item)=>{
+                if(item.targetId === targetId){
                     return item
                 }
             })
@@ -46,6 +54,10 @@ const store = new Vuex.Store({
         //更新文章列表
         updateArticleList(state,articleList){
             state.articleList = articleList
+        },
+        //更新消息列表
+        updateMessageList(state,message){
+            state.messageList.push(message)
         }
     }
 })
