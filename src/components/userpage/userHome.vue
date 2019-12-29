@@ -12,12 +12,7 @@
           text-color="#fff"
           active-text-color="#ffd04b">
           <el-menu-item index="/userHome/chat" >聊天模块</el-menu-item>
-          <el-submenu index="2">
-            <template slot="title">通知模块</template>
-            <el-menu-item index="/userHome/sendNotice">发送通知</el-menu-item>
-            <el-menu-item index="2-2">历史通知</el-menu-item>
-            <el-menu-item index="2-3">发送通知</el-menu-item>
-          </el-submenu>
+          <el-menu-item index="/userHome/notice" >通知模块</el-menu-item>
           <el-submenu index="3">
             <template slot="title">事务管理</template>
             <el-menu-item index="3-1">发起事务</el-menu-item>

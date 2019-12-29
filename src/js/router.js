@@ -11,7 +11,7 @@ import addFlow from '../components/adminpage/flow/addFlow'
 import articleManage from '../components/adminpage/article/articleManage'
 
 import chat from '../components/userpage/chat/chat'
-import sendNotice from '../components/userpage/notice/sendNotice'
+import notice from '../components/userpage/notice/notice'
 
 Vue.use(Router)
 
@@ -68,8 +68,8 @@ export default new Router({
           component:chat
         },
         {
-          path:'sendNotice',
-          component:sendNotice
+          path:'notice',
+          component:notice
         },
       ]
     }
