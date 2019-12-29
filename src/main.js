@@ -48,8 +48,48 @@ Vue.filter('dateFormart',function(date,formart ='yyyy-MM-dd HH:mm:ss'){
 
 Vue.config.productionTip = false
 
+import global from './js/ws.js'
+Vue.prototype.global = global
+
 new Vue({
   store,
   router,
+  created() {
+    //从缓存中获取用户信息
+    var userInfo =  JSON.parse(sessionStorage.getItem('userInfo'))
+    //如果存在
+    if(userInfo!=null){
+      //初始化ws
+      this.init(userInfo.userId,userInfo.userDepartmentId)
+      sessionStorage.setItem('flag',JSON.stringify(true))
+    }  
+  },
+  destroyed() {
+    //销毁ws
+    this.global.ws.onclose = function () {
+      console.log("socket已经关闭")
+    }
+  },
+  methods: {
+    init(userId,depId){
+      //初始化ws
+      this.global.setWs(userId,depId)
+      var that = this
+      //消息接收方式
+      this.global.ws.onmessage = function(msg){
+        var message = JSON.parse(msg.data)
+        if(message.type == 0){
+          that.$store.commit("updateMessageList",message)
+        }
+        if(message.type == 1){
+            const h = that.$createElement;
+            that.$notify({
+              title: '发送人：'+message.userName,
+              message: h('i', { style: 'color: teal'}, message.content)
+          });
+        }
+    }
+    }
+  },
   render: h => h(App)
 }).$mount('#app')

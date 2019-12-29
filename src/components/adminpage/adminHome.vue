@@ -199,7 +199,7 @@ export default {
             type:"success",
             message:res.data.msg
           })
-          sessionStorage.setItem("userInfo",JSON.stringify({}))
+          sessionStorage.clear()
           this.$router.push({path:'/'})
         }
         else{

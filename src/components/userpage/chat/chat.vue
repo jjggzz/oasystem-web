@@ -57,55 +57,22 @@ export default {
         }
     },
     created() {
+        var flag = JSON.parse(sessionStorage.getItem('flag'))
+        if(flag == null){
+            var userInfo =  JSON.parse(sessionStorage.getItem('userInfo'))
+            //如果存在
+            if(userInfo!=null){
+                this.global.setWs(userInfo.userId,userInfo.userDepartmentId)
+                this.global.ws.onmessage = this.message
+            }
+        }
         
-    },
-    mounted(){
-        this.init()
-    },
-    destroyed() {
-        // 销毁监听
-        this.socket.onclose = this.close
     },
     methods: {
         handleClick(tab, event) {
             //设置发送的方式
             this.sendtype = tab.name;
 
-        },
-        init:function(){
-            if(typeof(WebSocket) === 'undefined'){
-                console.log("您的浏览器不支持socket")
-            }
-            else{
-                var info =  JSON.parse(sessionStorage.getItem("userInfo"))
-                //创建实例
-                this.socket = new WebSocket(this.path+info.userId+'/'+info.userDepartmentId);
-                //监听连接
-                this.socket.onopen = this.open;
-                //监听错误信息
-                this.socket.onerror = this.error;
-                //监听消息
-                this.socket.onmessage = this.getMessage;
-            }
-        },
-        open:function(){
-            console.log("连接成功");
-        },
-        error:function(){
-            console.log("连接错误");
-        },
-        getMessage:function(msg){
-            var message = JSON.parse(msg.data)
-            if(message.type == 0){
-                this.$store.commit("updateMessageList",message)
-            }
-            if(message.type == 1){
-                const h = this.$createElement;
-                this.$notify({
-                title: '标题名称',
-                message: h('i', { style: 'color: teal'}, message.content)
-                });
-            }
         },
         send: function () {
             var storageInfo = JSON.parse(sessionStorage.getItem("userInfo"))
@@ -132,11 +99,21 @@ export default {
                 this.info.targetId = storageInfo.userDepartmentId
             }
 
-            this.socket.send(JSON.stringify(this.info));
+            this.global.ws.send(JSON.stringify(this.info));
             this.info.content = ''
         },
-        close: function () {
-            console.log("socket已经关闭")
+        message:function(msg){
+            var message = JSON.parse(msg.data)
+            if(message.type == 0){
+            this.$store.commit("updateMessageList",message)
+            }
+            if(message.type == 1){
+                const h = this.$createElement;
+                this.$notify({
+                    title: '发送人：'+message.userName,
+                    message: h('i', { style: 'color: teal'}, message.content)
+                });
+            }
         }
     },
 }
