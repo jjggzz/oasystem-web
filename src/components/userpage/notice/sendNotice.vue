@@ -8,7 +8,7 @@
           <el-col :span="14" :offset="4">
             <el-form :model="noticeForm" :rules="rules" ref="noticeForm" label-width="100px" >
               <el-form-item label="通知标题" prop="noticeTitle">
-                <el-input v-model="noticeForm.noticeTitle"></el-input>
+                <el-input v-model="noticeForm.noticeTitle" placeholder="请输入通知标题"></el-input>
               </el-form-item>
               <el-form-item label="通知描述" prop="noticeDescription">
                 <el-input 
@@ -77,6 +77,8 @@ export default {
           message:"发送失败"
         })
       }
+      this.noticeForm.noticeTitle = ''
+      this.noticeForm.noticeDescription =''
     },
     //文件改变时触发
     onChange(file,fileList){
@@ -109,6 +111,8 @@ export default {
                     message:res.data.msg
                   })
                 }
+                this.noticeForm.noticeTitle = ''
+                this.noticeForm.noticeDescription =''
               })
               .catch((res)=>{
                  this.$message({
@@ -117,7 +121,7 @@ export default {
                   })
               })
             }
-
+            
           } else {
             console.log('error submit!!');
             return false;

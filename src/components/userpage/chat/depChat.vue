@@ -2,7 +2,7 @@
   <el-container>
     <el-main style="height:450px;">
         <el-row >
-            <el-col  :span="24" >   
+            <el-col :span="24" >   
                 <ul  v-infinite-scroll="load" style="overflow:auto;list-style:none">
                      <li v-for="(item, index) in infoList" :key="index">
                         <div :class="item.userId === accountInfo.userId?'right':'left' ">

@@ -4,11 +4,11 @@
         <el-tabs style="height: 630px;" type="border-card" :tab-position="'left'">
             <el-tab-pane>
                 <span slot="label"><i class="el-icon-date"></i> 未读通知</span>
-                <newNotice></newNotice>
+                <unReadNotice></unReadNotice>
             </el-tab-pane>
             <el-tab-pane >
-                <span slot="label"><i class="el-icon-date"></i> 历史通知</span>
-                <historyNotice></historyNotice>
+                <span slot="label"><i class="el-icon-date"></i> 已读通知</span>
+                <readNotice></readNotice>
             </el-tab-pane>
             <el-tab-pane >
                 <span slot="label"><i class="el-icon-date"></i> 发送通知</span>
@@ -20,15 +20,15 @@
 </template>
 
 <script>
-import newNotice from './newNotice'
+import readNotice from './readNotice'
 import sendNotice from './sendNotice'
-import historyNotice from './historyNotice'
+import unReadNotice from './unReadNotice'
 
 export default {
     components:{
-        'newNotice':newNotice,
+        'readNotice':readNotice,
         "sendNotice":sendNotice,
-        "historyNotice":historyNotice
+        "unReadNotice":unReadNotice
     },
     data() {
         return {
