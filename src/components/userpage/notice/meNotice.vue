@@ -69,6 +69,7 @@
             </el-card>
           </div>
           <span slot="footer" class="dialog-footer">
+            <el-button type="danger" @click="delNotice">删 除</el-button>
             <el-button @click="handleClose">取 消</el-button>
             <el-button type="primary" @click="handleClose">确 定</el-button>
           </span>
@@ -113,6 +114,46 @@ export default {
     this.getNoticeList()
   },
   methods: {
+    delNotice(){
+        //确认删除？
+        this.$confirm('此操作将永久删除该通知, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'error'
+        }).then(() => {
+            //发起删除请求
+            this.axios.delete('/notice/'+this.noticeId)
+            .then((res)=>{
+                if(res.data.status == 0){
+                    this.$message({
+                        type: 'success',
+                        message: res.data.msg
+                    });
+                }
+                else{
+                     this.$message({
+                        type: 'error',
+                        message: res.data.msg
+                    });
+                }
+                this.handleClose()
+                this.getNoticeList()
+            })
+            .catch((res)=>{
+                this.$message({
+                    type: 'warning',
+                    message: '请求删除失败'
+                });  
+            })
+
+          
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+    },
     handleClose(){
       this.centerDialogVisible = false
     },
@@ -178,7 +219,7 @@ export default {
     //获取已读通知列表
     getNoticeList(){
       var info = JSON.parse(sessionStorage.getItem("userInfo"))
-      this.axios.get('/notice/readNoticeList/'+info.userId)
+      this.axios.get('/notice/userNoticeList/'+info.userId)
       .then((res)=>{
         if(res.data.status == 0){
           this.noticeList = res.data.data.noticeList

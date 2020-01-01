@@ -29,16 +29,40 @@
             </li>
         </ul>
         <el-dialog
-          title="提示"
+          title="通知详情"
           :visible.sync="centerDialogVisible"
-          width="30%"
-          center>
-          <div v-loading="true" >
-            {{noticeId}}
+          width="45%"
+          center
+          :before-close="handleClose">
+          <div v-loading="false" >
+            <el-card class="box-card">
+                <div  class="text show-item">
+                  <i class="el-icon-user"></i>发送人：{{noticeInfo.user.userName}}
+                </div>
+                <div  class="text show-item">
+                  <i class="el-icon-date"></i>发送时间：{{noticeInfo.noticeSendTime | dateFormart}}
+                </div>
+                <div  class="text show-item">
+                  <i class="el-icon-collection-tag"></i>标题：{{noticeInfo.noticeTitle}}
+                </div>
+                <div  class="text show-item">
+                  <i class="el-icon-notebook-1"></i>通知描述：{{noticeInfo.noticeDescription}}
+                </div>
+                <div  class="text show-item">
+                  <i class="el-icon-document"></i>文件列表：{{noticeInfo.noticeFileList.length}}个文件
+                  <ul style="overflow:auto;list-style:none">
+                    <li v-for="(item, index) in noticeInfo.noticeFileList" :key="index">
+                        <span class="file-item">文件名：{{item.fileName}} </span>
+                        <span class="file-item">文件大小：{{item.fileSize/1024}} K</span>
+                        <el-button icon="el-icon-download" @click="downloadNoticeFile(item.fileId,item.fileName)" size="mini">下载</el-button>
+                    </li>
+                  </ul>
+                </div>       
+            </el-card>
           </div>
           <span slot="footer" class="dialog-footer">
-            <el-button @click="centerDialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+            <el-button @click="handleClose">取 消</el-button>
+            <el-button type="primary" @click="read">确认已读</el-button>
           </span>
         </el-dialog>
       </el-main>
@@ -61,13 +85,82 @@ export default {
       centerDialogVisible: false,
       noticeList:[],
       search:'',
-      noticeId:''
+      noticeId:'',
+      noticeInfo:{
+        noticeId:'',
+        noticeSendTime:'',
+        noticeTitle:'',
+        noticeDescription:'',
+        noticeType:'',
+        user:{
+          userId:'',
+          userName:''
+        },
+        noticeFileList:[],
+        noticeReadList:[]
+      }
     }
   },
   created() {
     this.getNewNoticeList()
   },
   methods: {
+    read(){
+      this.axios.post('/noticeRead/'+this.noticeId)
+      .then((res)=>{
+          
+        if(res.data.status != 0){
+          this.$message({
+            type:'error',
+            message:res.data.msg
+          })
+        }
+        //重新加载未读列表
+        this.getNewNoticeList()
+        this.handleClose()
+      })
+      .catch((res)=>{
+        this.$message({
+            type:'warning',
+            message:'请求阅读失败'
+          })
+      })
+    },
+    handleClose(){
+      this.centerDialogVisible = false
+    },
+    //下载文件
+    downloadNoticeFile(fileId,fileName){
+      this.axios.get("/noticeFile/download/"+fileId,{
+        responseType:'blob'
+      })
+      .then((res)=>{
+         console.log(res)
+        if (window.navigator.msSaveBlob) {
+          try {
+          const blobObject = new Blob([res.data]);
+          window.navigator.msSaveBlob(blobObject, fileName);
+          } catch (e) {
+            console.log(e);
+          }
+      } else {
+          const blob = res.data;
+          const reader = new FileReader();
+          reader.readAsDataURL(blob);
+          reader.onload = (e) => {
+          const a = document.createElement('a');
+          a.download = fileName;
+          a.href = e.target.result;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          }
+      }
+      })
+      .catch((res)=>{
+
+      })
+    },
     load () {
 
     },
@@ -77,6 +170,16 @@ export default {
       this.axios.get('/notice/'+this.noticeId)
       .then((res)=>{
         console.log(res)
+        if(res.data.status == 0){
+          this.noticeInfo = res.data.data.notice
+        }
+        else{
+          this.$message({
+            type:'error',
+            message:res.data.msg
+          })
+        }
+
       })
       .catch((res)=>{
          this.$message({
@@ -106,6 +209,13 @@ export default {
 </script>
 
 <style scoped>
+  .file-item{
+    margin-left: 5px;
+    margin-right: 5px
+  }
+  .show-item{
+    margin-bottom: 18px;
+  }
   .item{
     display: flex;
     flex-direction: row;
