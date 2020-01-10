@@ -52,7 +52,7 @@
                   <ul style="overflow:auto;list-style:none">
                     <li v-for="(item, index) in noticeInfo.noticeFileList" :key="index">
                         <span class="file-item">文件名：{{item.fileName}} </span>
-                        <span class="file-item">文件大小：{{item.fileSize/1024}} K</span>
+                        <span class="file-item">文件大小：{{Math.round( item.fileSize/1024)}} K</span>
                         <el-button icon="el-icon-download" @click="downloadNoticeFile(item.fileId,item.fileName)" size="mini">下载</el-button>
                     </li>
                   </ul>

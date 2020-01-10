@@ -12,6 +12,9 @@ import articleManage from '../components/adminpage/article/articleManage'
 
 import chat from '../components/userpage/chat/chat'
 import notice from '../components/userpage/notice/notice'
+import memberList from '../components/userpage/member/memberList'
+import noticeFile from '../components/userpage/file/noticeFile'
+import myFile from '../components/userpage/file/myFile'
 
 Vue.use(Router)
 
@@ -70,6 +73,18 @@ export default new Router({
         {
           path:'notice',
           component:notice
+        },
+        {
+          path:'memberList',
+          component:memberList
+        },
+        {
+          path:'noticeFile',
+          component:noticeFile
+        },
+        {
+          path:'myFile',
+          component:myFile
         },
       ]
     }
