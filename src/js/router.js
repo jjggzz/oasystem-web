@@ -15,6 +15,9 @@ import notice from '../components/userpage/notice/notice'
 import memberList from '../components/userpage/member/memberList'
 import noticeFile from '../components/userpage/file/noticeFile'
 import myFile from '../components/userpage/file/myFile'
+import technology from '../components/userpage/article/technology'
+import waffle from '../components/userpage/article/waffle'
+import sendArticle from '../components/userpage/article/sendArticle'
 
 Vue.use(Router)
 
@@ -85,6 +88,18 @@ export default new Router({
         {
           path:'myFile',
           component:myFile
+        },
+        {
+          path:'technology',
+          component:technology
+        },
+        {
+          path:'waffle',
+          component:waffle
+        },
+        {
+          path:'sendArticle',
+          component:sendArticle
         },
       ]
     }

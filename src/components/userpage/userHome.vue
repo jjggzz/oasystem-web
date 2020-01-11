@@ -27,13 +27,15 @@
            <el-menu-item index="/userHome/memberList">成员名册</el-menu-item>
            <el-submenu index="6" >
             <template slot="title">组织论坛</template>
-            <el-menu-item index="6-1">技术求助</el-menu-item>
-            <el-menu-item index="6-2">灌水专区</el-menu-item>
+            <el-menu-item index="/userHome/technology">技术求助</el-menu-item>
+            <el-menu-item index="/userHome/waffle">灌水专区</el-menu-item>
+            <el-menu-item index="/userHome/sendArticle">我要发帖</el-menu-item>
           </el-submenu>
           <el-submenu index="7" >
             <template slot="title">个人中心</template>
             <el-menu-item  @click="dialog = true">个人信息</el-menu-item>
             <el-menu-item @click="dialogFormVisible = true">修改密码</el-menu-item>
+            <el-menu-item  >我的帖子</el-menu-item>
           </el-submenu>
           <el-menu-item  @click="dialogcalendarVisible = true">日历</el-menu-item>
           <el-menu-item  @click="logout" class="right">
