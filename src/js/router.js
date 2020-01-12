@@ -18,6 +18,8 @@ import myFile from '../components/userpage/file/myFile'
 import technology from '../components/userpage/article/technology'
 import waffle from '../components/userpage/article/waffle'
 import sendArticle from '../components/userpage/article/sendArticle'
+import myArticle from '../components/userpage/article/myArticle'
+import articleInfo from '../components/userpage/article/articleInfo'
 
 Vue.use(Router)
 
@@ -100,6 +102,14 @@ export default new Router({
         {
           path:'sendArticle',
           component:sendArticle
+        },
+        {
+          path:'myArticle',
+          component:myArticle
+        },
+        {
+          path:'articleInfo',
+          component:articleInfo
         },
       ]
     }

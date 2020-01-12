@@ -13,8 +13,11 @@
         </el-row>
       </el-header>
       <el-main style="padding:0px">
+          <div style="margin-top:50px;text-align:center" v-if="showList.length==0">
+              暂无贴子
+          </div>
           <!-- hot -->
-          <el-row v-for="(item,index) in showList" :key="item.articleId">
+          <el-row v-else v-for="(item,index) in showList" :key="item.articleId">
               <el-col>
                 <el-card shadow="hover">
                   <div class="item">
@@ -29,6 +32,7 @@
                         </div>
                       </div>
                       <div class="click">
+                          <el-button @click="articleInfo(item)" type="text">详情</el-button>
                         <div>评论数：{{item.articleCommentCount>999?"999+":item.articleCommentCount}}</div>
                         <div>浏览量：{{item.articlePageView>999?"999+":item.articlePageView}}</div>
                       </div>
@@ -59,6 +63,14 @@ export default {
         }
     },
     methods: {
+        articleInfo(item){
+            this.axios.put('/article/'+item.articleId,{articlePageView:(item.articlePageView+1)})
+            .then((res)=>{
+                console.log(res)
+            })
+            sessionStorage.setItem("articleDetailsId",item.articleId);
+            this.$router.push({path:'/userHome/articleInfo'})
+        },
         getArticleList(){
             this.axios.get('/article/articleList/'+ 1)
             .then((res)=>{

@@ -35,7 +35,7 @@
             <template slot="title">个人中心</template>
             <el-menu-item  @click="dialog = true">个人信息</el-menu-item>
             <el-menu-item @click="dialogFormVisible = true">修改密码</el-menu-item>
-            <el-menu-item  >我的帖子</el-menu-item>
+            <el-menu-item index="/userHome/myArticle">我的帖子</el-menu-item>
           </el-submenu>
           <el-menu-item  @click="dialogcalendarVisible = true">日历</el-menu-item>
           <el-menu-item  @click="logout" class="right">
