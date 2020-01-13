@@ -9,6 +9,7 @@ import positionManage from '../components/adminpage/position/positionManage'
 import flowManage from '../components/adminpage/flow/flowManage'
 import addFlow from '../components/adminpage/flow/addFlow'
 import articleManage from '../components/adminpage/article/articleManage'
+import articleInfoManage from '../components/adminpage/article/articleInfoManage'
 
 import chat from '../components/userpage/chat/chat'
 import notice from '../components/userpage/notice/notice'
@@ -63,7 +64,11 @@ export default new Router({
         {
           path:'articleManage',
           component:articleManage,
-        }
+        },
+        {
+          path:'articleInfoManage',
+          component:articleInfoManage
+        },
       ]
     },
     {

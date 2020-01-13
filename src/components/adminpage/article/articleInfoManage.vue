@@ -47,6 +47,7 @@
                         {{item.commentContent}}
                     </div>
                     <div class="date">
+                        <el-button @click="deleteComment(item.commentId)" type="danger" size="mini">删除</el-button>
                         <el-button @click="showinput(item.commentId)" type="text">回复</el-button>
                         <div>发布时间：{{item.commentCreateTime|dateFormart}}</div>
                     </div>
@@ -66,6 +67,7 @@
                                     {{item2.commentContent}}
                                 </div>
                                 <div class="date">
+                                    <el-button @click="deleteComment(item.commentId)" type="danger" size="mini">删除</el-button>
                                     <div>发布时间：{{item2.commentCreateTime|dateFormart}}</div>
                                 </div>
                             </div>
@@ -128,6 +130,33 @@ export default {
         }
     },
     methods: {
+    deleteComment(commentId){
+        this.$confirm('此操作将永久删除该回复, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          //删除
+          this.axios.delete('/comment/'+commentId)
+          .then((res)=>{
+              if(res.data.status == 0){
+                  this.getArticleDetails(this.articleId)
+              }
+              else{
+                  this.$message.error(res.data.msg)
+              }
+          })
+          .catch((res)=>{
+              this.$message.warning('请求删除失败')
+          })
+
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+    },
     createComment(){
         if(this.articleInfo.articleState == 1){
             this.$message.warning('该帖子已被锁定，无法回复');

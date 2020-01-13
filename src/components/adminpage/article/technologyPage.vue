@@ -56,7 +56,7 @@
           size="mini"
           type="primary"
           plain
-          @click="handleEdit(scope.$index, scope.row)">详情</el-button>
+          @click="articleInfo(scope.$index, scope.row)">详情</el-button>
           <el-button
           size="mini"
           type="success"
@@ -97,8 +97,10 @@ export default {
       filterState(value, row){
         return row.articleState == value;
       },
-      handleEdit(index, row) {
+      articleInfo(index, row) {
+          sessionStorage.setItem("articleDetailsId",row.articleId);
           console.log(index, row);
+          this.$router.push({path:'/adminHome/articleInfoManage'})
       },
       //解锁
       unlockArticle(index, row) {
