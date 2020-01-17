@@ -11,20 +11,15 @@
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b">
-          <el-menu-item index="/userHome/chat" >聊天模块</el-menu-item>
-          <el-menu-item index="/userHome/notice" >通知模块</el-menu-item>
-          <el-submenu index="3">
-            <template slot="title">事务管理</template>
-            <el-menu-item index="3-1">发起事务</el-menu-item>
-            <el-menu-item index="3-2">我的事务</el-menu-item>
-            <el-menu-item index="3-3">审批事务</el-menu-item>
-          </el-submenu>
+          <el-menu-item index="/userHome/chat" >聊天室</el-menu-item>
+          <el-menu-item index="/userHome/notice" >公告栏</el-menu-item>
+          <el-menu-item index="/userHome/task/createTask" >任务管理</el-menu-item>
           <el-submenu index="4">
-            <template slot="title">文件列表</template>
+            <template slot="title">文件馆</template>
             <el-menu-item index="/userHome/noticeFile">通知文件</el-menu-item>
             <el-menu-item index="/userHome/myFile">我的文件</el-menu-item>
           </el-submenu>
-           <el-menu-item index="/userHome/memberList">成员名册</el-menu-item>
+           <el-menu-item index="/userHome/memberList">花名册</el-menu-item>
            <el-submenu index="6" >
             <template slot="title">组织论坛</template>
             <el-menu-item index="/userHome/technology">技术求助</el-menu-item>

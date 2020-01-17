@@ -21,6 +21,13 @@ import waffle from '../components/userpage/article/waffle'
 import sendArticle from '../components/userpage/article/sendArticle'
 import myArticle from '../components/userpage/article/myArticle'
 import articleInfo from '../components/userpage/article/articleInfo'
+import task from '../components/userpage/task/task'
+import createTask from '../components/userpage/task/createTask'
+import myBacklog from '../components/userpage/task/myBacklog'
+import continuing from '../components/userpage/task/continuing'
+import historyTask from '../components/userpage/task/historyTask'
+import examine from '../components/userpage/task/examine'
+import historyExamine from '../components/userpage/task/historyExamine'
 
 Vue.use(Router)
 
@@ -115,6 +122,36 @@ export default new Router({
         {
           path:'articleInfo',
           component:articleInfo
+        },
+        {
+          path:'task',
+          component:task,
+          children:[
+            {
+              path:'createTask',
+              component:createTask
+            },
+            {
+              path:'myBacklog',
+              component:myBacklog
+            },
+            {
+              path:'continuing',
+              component:continuing
+            },
+            {
+              path:'historyTask',
+              component:historyTask
+            },
+            {
+              path:'examine',
+              component:examine
+            },
+            {
+              path:'historyExamine',
+              component:historyExamine
+            },
+          ]
         },
       ]
     }
