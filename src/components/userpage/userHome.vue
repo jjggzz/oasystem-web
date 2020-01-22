@@ -77,7 +77,7 @@
        <div class="photo">
           <el-upload
             class="avatar-uploader"
-            :action="'http://localhost:8081/oasystem/user/uploadPortrait/'+this.accountInfo.userId"
+            :action="'https://www.98guangzheng.xyz:8081/oasystem/user/uploadPortrait/'+this.accountInfo.userId"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">

@@ -32,9 +32,13 @@ import historyExamine from '../components/userpage/task/historyExamine'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes: [
+    { 
+      path: '',
+      redirect:'/login'
+    },
     { 
       path: '/',
       redirect:'/login'
