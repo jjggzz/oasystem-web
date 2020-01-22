@@ -23,7 +23,7 @@
                 v-model="info.content"
                 @keydown.ctrl.enter.native="send">
                 </el-input>
-                <el-button style="margin-top:5px" @click="send" type="success">成功按钮</el-button>
+                <el-button style="margin-top:5px" @click="send" type="success">发送</el-button>
             </el-col>
         </el-row>
       </el-main>
