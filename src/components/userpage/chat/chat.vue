@@ -42,7 +42,7 @@ export default {
     data() {
         return {
             activeName: 'first',
-            path:'ws://www.98guangzheng.xyz:8081/oasystem/webSocket/',
+            path:'wss://www.98guangzheng.xyz/oasystem/webSocket/',
             accountInfo:{},
             socket:'',
             info:{

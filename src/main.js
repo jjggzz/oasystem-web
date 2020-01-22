@@ -10,7 +10,7 @@ Vue.use(ElementUI)
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 //设置全局访问路径
-axios.defaults.baseURL= 'https://www.98guangzheng.xyz:8081/oasystem'
+axios.defaults.baseURL= 'https://www.98guangzheng.xyz/oasystem'
 //访问携带cookie
 axios.defaults.withCredentials = true
 Vue.use(VueAxios, axios)

@@ -23,7 +23,7 @@
               ref="upload"
               :with-credentials=true
               :data='noticeForm'
-              action="https://www.98guangzheng.xyz:8081/oasystem/noticeFile"
+              action="https://www.98guangzheng.xyz/oasystem/noticeFile"
               :limit='1'
               :on-change='onChange'
               :before-remove='beforeRemove'
