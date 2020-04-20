@@ -7,7 +7,7 @@ export default{
         }
         else{
             //创建实例
-            this.ws = new WebSocket('wss://www.98guangzheng.xyz/oasystem/webSocket/'+userId+'/'+depId);
+            this.ws = new WebSocket('ws://192.168.1.102/oasystem/webSocket/'+userId+'/'+depId);
             //监听连接
             this.ws.onopen = function(){
                 console.log('连接成功')

@@ -9,7 +9,7 @@
               :on-success='onSuccess'
               :before-upload='beforUpload'
               :with-credentials=true
-              action="https://www.98guangzheng.xyz/oasystem/userFile"
+              action="http://192.168.1.102/oasystem/userFile"
               multiple>
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
