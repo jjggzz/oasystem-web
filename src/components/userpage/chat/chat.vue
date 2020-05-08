@@ -42,7 +42,7 @@ export default {
     data() {
         return {
             activeName: 'first',
-            path:'wss://192.168.1.102/oasystem/webSocket/',
+            path:'ws://www.98guangzheng.xyz:8080/oasystem/webSocket/',
             accountInfo:{},
             socket:'',
             info:{
@@ -98,6 +98,7 @@ export default {
             else{
                 this.info.targetId = storageInfo.userDepartmentId
             }
+
 
             this.global.ws.send(JSON.stringify(this.info));
             this.info.content = ''

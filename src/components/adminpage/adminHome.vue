@@ -69,7 +69,7 @@
         <div class="photo">
           <el-upload
             class="avatar-uploader"
-            :action="'http://192.168.1.102/oasystem/user/uploadPortrait/'+this.accountInfo.userId"
+            :action="'http://www.98guangzheng.xyz:8080/oasystem/user/uploadPortrait/'+this.accountInfo.userId"
             :with-credentials="true"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"

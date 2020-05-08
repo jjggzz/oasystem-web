@@ -29,7 +29,7 @@
               ref="upload"
               :with-credentials=true
               :data='applyForm'
-              action="http://192.168.1.102/oasystem/apply"
+              action="http://www.98guangzheng.xyz:8080/oasystem/apply"
               :limit='1'
               :auto-upload="false"
               :on-change="onChange"

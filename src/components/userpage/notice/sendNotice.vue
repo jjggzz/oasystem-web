@@ -23,7 +23,7 @@
               ref="upload"
               :with-credentials=true
               :data='noticeForm'
-              action="http://192.168.1.102/oasystem/noticeFile"
+              action="http://www.98guangzheng.xyz:8080/oasystem/noticeFile"
               :limit='1'
               :on-change='onChange'
               :before-remove='beforeRemove'

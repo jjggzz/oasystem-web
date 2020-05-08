@@ -32,7 +32,7 @@
               class="upload-demo"
               drag
               :data="article"
-              action="http://192.168.1.102/oasystem/article"
+              action="http://www.98guangzheng.xyz:8080/oasystem/article"
               :limit="1"
               :auto-upload="false"
               :with-credentials="true"
